@@ -167,7 +167,7 @@ final class Daemon {
         guard let hue = decoded.hue else { throw UsageError("cannot decode \(path)") }
         let palette = Palette(H: hue.H, C: hue.C)
         let kind = req.transition ?? TransitionKind.allCases.randomElement()!
-        let origin = req.origin.map { CGPoint(x: $0[0], y: $0[1]) } ?? NSEvent.mouseLocation
+        let origin = req.origin.flatMap { $0.count == 2 ? CGPoint(x: $0[0], y: $0[1]) : nil } ?? NSEvent.mouseLocation
         let t0 = CACurrentMediaTime() + 0.05
         let ms = Int(kind.duration * 1000)
         Log.write("\(req.cmd) \(path) H=\(palette.H) C=\(palette.C) \(kind.rawValue)")

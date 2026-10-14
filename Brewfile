@@ -19,7 +19,10 @@ brew "imagemagick"
 brew "tree-sitter-cli"
 brew "librsvg"
 
-# Shell and TUI tools
+# Shell and TUI tools (tmux, ripgrep and jq are used by bin/study, vault-due and the bar)
+brew "tmux"
+brew "ripgrep"
+brew "jq"
 brew "starship"
 brew "zoxide"
 brew "fzf"

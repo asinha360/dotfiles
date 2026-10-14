@@ -96,7 +96,7 @@ Exit codes: 0 ok, 1 error, 3 daemon not running. IPC: Unix socket, newline-delim
 - **Study sessions** (B2 `bin/study`): `vault`, `notes`, `cava`, `ask`. Window title = tmux session name (`set-titles-string '#S'`), so AeroSpace can identify the windows.
   - `vault`: `yazi ~/projects/study-vault` on top 70%, `vault-due --watch` below.
   - `notes`: `nvim` in the vault.
-  - `cava`: `cava`.
+  - `cava`: not a tmux session. Its Ghostty window runs `cava` directly (title `cava`), so macOS attributes the system-audio tap to Ghostty; tmux panes are their own TCC responsible process.
   - `ask`: `claude` in the vault.
 - **Build sessions** (B2 `bin/build`): `code`, `agent`, `bench` (cwd given as an argument, default `$PWD`).
 - **Scripts:**

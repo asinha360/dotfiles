@@ -24,10 +24,23 @@ run() {
   if [ $dry = 1 ]; then printf '%q ' "$@"; echo; else "$@" >/dev/null; fi
 }
 
-# idle PANE: the pane sits at a shell prompt (its program was quit, or tmux-resurrect restored a bare shell)
+# One run at a time: overlapping runs would split panes twice and type into programs that are starting
+lock=$HOME/.cache/study.lock
+if [ $dry = 0 ]; then
+  mkdir -p "${lock%/*}"
+  if ! mkdir "$lock" 2>/dev/null; then
+    if kill -0 "$(cat "$lock/pid" 2>/dev/null)" 2>/dev/null; then echo "${0##*/}: already running" >&2; exit 0; fi
+    rm -f "$lock/pid"; rmdir "$lock" 2>/dev/null; mkdir "$lock" || exit 1
+  fi
+  echo $$ > "$lock/pid"
+  trap 'rm -f "$lock/pid"; rmdir "$lock"' EXIT
+fi
+
+# idle PANE: the pane sits at a shell prompt (its program was quit, or tmux-resurrect restored a bare shell).
+# Only the login shell counts: vault-due is a bash script, so a running one reports bash.
 idle() {
   case $(tmux display -p -t "$1" '#{pane_current_command}' 2>/dev/null) in
-    zsh | bash | sh) return 0 ;;
+    zsh) return 0 ;;
   esac
   return 1
 }
@@ -40,8 +53,9 @@ session() {
     created=1
     run tmux new-session -d -s "$1" -c "$2"
   fi
-  if [ -n "${3:-}" ] && { [ $created = 1 ] || idle "=$1:.{top}"; }; then
-    run tmux send-keys -t "=$1:.{top}" "$3" Enter
+  # ^ pins the first window, which holds the panel even if other windows were opened in the session
+  if [ -n "${3:-}" ] && { [ $created = 1 ] || idle "=$1:^.{top}"; }; then
+    run tmux send-keys -t "=$1:^.{top}" "$3" Enter
   fi
   # The trailing colon makes -t resolve as an exact session name
   run tmux set -t "=$1:" status off
@@ -57,8 +71,20 @@ ghostty_start() {
   done
 }
 
-# window NAME: a Ghostty window attached to the session, unless one already is
+# window NAME [PROGRAM]: a Ghostty window attached to the session, unless one already is.
+# With PROGRAM the window runs it directly, outside tmux, titled NAME.
 window() {
+  if [ -n "${2:-}" ]; then
+    if [ $dry = 0 ] && [ -n "$(wid "$1")" ]; then
+      pgrep -xq "${2##*/}" && return
+      run aerospace close --window-id "$(wid "$1")" # its program exited: replace the window
+    fi
+    run osascript -e 'on run argv' \
+      -e 'tell application "Ghostty" to new window with configuration {command:item 1 of argv}' \
+      -e 'end run' "/bin/sh -c 'printf \"\\033]2;$1\\007\"; while :; do $2; printf \"\\n$1 exited. Enter restarts it \"; read _ || exit; done'" ||
+      run open -na Ghostty.app --args --window-save-state=never --title="$1" -e "$2"
+    return
+  fi
   if [ $dry = 0 ] && tmux list-clients -t "=$1" -F '#{client_termname}' 2>/dev/null | grep -q ghostty; then
     return
   fi
@@ -86,6 +112,8 @@ columns() {
     done
   done
   for s; do run aerospace move-node-to-workspace --window-id "$(wid "$s")" "$ws"; done
+  # Tile weights only become pixels when the workspace is laid out, so it must be visible while resizing
+  run aerospace workspace "$ws"
   run aerospace flatten-workspace-tree --workspace "$ws"
   run aerospace layout --window-id "$(wid "$1")" h_tiles
   # Push each window to the right edge in turn; any other windows end up on the left
@@ -103,11 +131,16 @@ case ${0##*/} in
     dir=${dir:-$PWD}
     [ "$dir" = / ] && dir=$HOME # AeroSpace runs scripts from /
     dir=$(cd "$dir" && pwd) || exit 1
+    # Existing sessions keep their directory; refuse rather than open the wrong project
+    was=$(tmux display -p -t '=code:' '#{session_path}' 2>/dev/null)
+    if [ $dry = 0 ] && [ -n "$was" ] && [ "$was" != "$dir" ]; then
+      echo "${0##*/}: build sessions are open in $was; close them (tmux kill-session -t code etc.) first" >&2; exit 1
+    fi
     session code "$dir" nvim
     session agent "$dir" claude
     session bench "$dir"
     # Placeholder left on the prompt, not run
-    [ $created = 1 ] && run tmux send-keys -t =bench: 'watchexec -c -- '
+    [ $created = 1 ] && run tmux send-keys -t '=bench:^' 'watchexec -c -- '
     ghostty_start
     for s in code agent bench; do window $s; done
     columns 2 code agent bench || exit 1
@@ -119,19 +152,21 @@ case ${0##*/} in
   *)
     vault=$HOME/projects/study-vault
     session vault "$vault" 'yazi .'
-    if [ $created = 1 ] || [ "$(tmux display -p -t =vault: '#{window_panes}')" = 1 ]; then
-      run tmux split-window -d -v -l 30% -t =vault: -c "$vault"
-      run tmux send-keys -t '=vault:.{bottom}' 'vault-due --watch' Enter
-    elif idle '=vault:.{bottom}'; then
-      run tmux send-keys -t '=vault:.{bottom}' 'vault-due --watch' Enter
+    if [ $created = 1 ] || [ "$(tmux display -p -t '=vault:^' '#{window_panes}')" = 1 ]; then
+      run tmux split-window -d -v -l 30% -t '=vault:^' -c "$vault"
+      run tmux send-keys -t '=vault:^.{bottom}' 'vault-due --watch' Enter
+    elif idle '=vault:^.{bottom}'; then
+      run tmux send-keys -t '=vault:^.{bottom}' 'vault-due --watch' Enter
     fi
     # The split is made at the detached 80x24 size; keep due at 30% whenever the window resizes
-    run tmux set-hook -t =vault: window-resized 'resize-pane -t "=vault:.{bottom}" -y 30%'
+    run tmux set-hook -t =vault: window-resized 'resize-pane -t "=vault:^.{bottom}" -y 30%'
     session notes "$vault" nvim
-    session cava "$vault" cava
     session ask "$vault" claude
     ghostty_start
-    for s in vault notes cava ask; do window $s; done
+    for s in vault notes ask; do window $s; done
+    # cava runs outside tmux: tmux panes are their own TCC responsible process, so the
+    # system-audio tap would be attributed to zsh. Started by Ghostty, it is attributed to Ghostty.
+    window cava /opt/homebrew/bin/cava
     columns 1 vault notes cava ask || exit 1
     run aerospace join-with --window-id "$(wid cava)" right
     # resize spreads the change over every sibling, so alternate until both side columns settle

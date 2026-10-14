@@ -57,7 +57,10 @@ link_one() {
   if [ -L "$dst" ] && [ "$(readlink "$dst")" = "$src" ]; then return; fi
   if [ -e "$dst" ] || [ -L "$dst" ]; then
     run mkdir -p "$BACKUP/replaced"
-    run mv "$dst" "$BACKUP/replaced/$(echo "$dst" | sed "s|$HOME/||; s|/|__|g")"
+    # Never overwrite an earlier backup: the unsuffixed one is the original that --uninstall restores
+    saved="$BACKUP/replaced/$(echo "$dst" | sed "s|$HOME/||; s|/|__|g")"; n=$saved; i=0
+    while [ -e "$n" ] || [ -L "$n" ]; do i=$((i + 1)); n="$saved.$i"; done
+    run mv "$dst" "$n"
   fi
   run mkdir -p "$(dirname "$dst")"
   run ln -s "$src" "$dst"
@@ -100,7 +103,9 @@ if [ ! -d "$HOME/projects/study-vault" ] && [ -d "$REPO/vault-scaffold" ]; then
 fi
 
 # tmux plugin manager
-[ -d "$HOME/.tmux/plugins/tpm" ] || run git clone -q https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
+for p in tpm tmux-resurrect tmux-continuum; do
+  [ -d "$HOME/.tmux/plugins/$p" ] || run git clone -q "https://github.com/tmux-plugins/$p" "$HOME/.tmux/plugins/$p"
+done
 
 # wallsync binary + LaunchAgent
 run make -C "$REPO/wallsync" install
@@ -109,11 +114,24 @@ if [ $DRY = 1 ]; then echo "+ render $PLIST"; else
   sed "s|__HOME__|$HOME|g" "$REPO/wallsync/launchd/com.user.wallsync.plist" > "$PLIST"
 fi
 
+# First render, so cava's theme, Ghostty's include and the rest exist before any wallpaper change
+OUT="$HOME/.cache/wallsync/out"
+first=$(ls "$HOME"/Pictures/walls/*.png "$HOME"/Pictures/walls/*.jpg 2>/dev/null | head -1)
+if [ ! -e "$OUT/palette.json" ] && [ -n "$first" ]; then
+  if [ $DRY = 1 ]; then echo "+ render palette of $first into $OUT"; else
+    "$HOME/.local/bin/wallsync" palette "$first" > "$OUT/palette.json"
+    "$HOME/.local/bin/wallsync" render "$OUT/palette.json" "$REPO/wallsync/templates" "$OUT"
+  fi
+fi
+
 if [ $SERVICES = 1 ]; then
   run launchctl bootout "$UID_GUI/com.user.wallsync" 2>/dev/null || true
   run launchctl bootstrap "$UID_GUI" "$PLIST"
   run brew services start sketchybar
   run brew services start borders
+  # Rectangle would fight AeroSpace over window frames; --uninstall reopens it
+  run osascript -e 'quit app "Rectangle"' 2>/dev/null || true
+  run osascript -e 'tell application "System Events" to delete login item "Rectangle"' 2>/dev/null || true
   run open -a AeroSpace
 fi
 echo "done"

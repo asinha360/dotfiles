@@ -26,6 +26,8 @@ au('ColorScheme', {
     if vim.g.colors_name ~= 'monolith' and fg_of('@markup.math.latex') then
       vim.api.nvim_set_hl(0, 'SnacksImageMath', { fg = fg_of('@markup.math.latex') })
     end
+    -- Forget which images the terminal holds so they are sent again: a restarted Ghostty has none
+    pcall(function() require('snacks.image.image').clear() end)
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
       if vim.b[buf].snacks_image_attached then
         pcall(vim.api.nvim_exec_autocmds, 'BufWinEnter', { group = 'snacks.image.inline.' .. buf, buffer = buf })
