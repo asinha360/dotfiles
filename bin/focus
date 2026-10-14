@@ -1,0 +1,48 @@
+#!/bin/bash
+# Deep-work timer.
+#   focus 50|25|<min> [label] [blocks]   start <blocks> back-to-back blocks (default: deep, 1)
+#   focus stop                           cancel
+#   focus status                         print "◷ MM:SS label" (empty when idle)
+# The bar calls `focus status` every second; that call also closes a finished
+# block (notification + sound) and starts the next one.
+# State file lines: end_epoch, label, n/total, minutes.
+dir="${FOCUS_STATE_DIR:-$HOME/.cache/focus}"
+state="$dir/state"
+
+usage() { echo "usage: focus 50|25|<min> [label] [blocks] | stop | status" >&2; exit 1; }
+
+start() { # minutes label n total
+  mkdir -p "$dir"
+  printf '%s\n%s\n%s/%s\n%s\n' $(( $(date +%s) + 10#$1 * 60 )) "$2" "$3" "$4" "$1" > "$state.tmp"
+  mv "$state.tmp" "$state"
+}
+
+status() {
+  [ -f "$state" ] || return 0
+  { read -r end; read -r label; read -r block; read -r min; } < "$state"
+  left=$(( end - $(date +%s) ))
+  if [ "$left" -gt 0 ]; then
+    [ "${block#*/}" -gt 1 ] && label="$label $block"
+    printf '◷ %02d:%02d %s\n' $((left / 60)) $((left % 60)) "$label"
+    return 0
+  fi
+  # mv is atomic, so only one concurrent caller announces the end.
+  mv "$state" "$state.done" 2>/dev/null || return 0
+  rm -f "$state.done"
+  osascript -e 'on run argv' -e 'display notification (item 1 of argv) with title "focus"' \
+    -e 'end run' "$label block $block done" >/dev/null 2>&1 &
+  afplay /System/Library/Sounds/Glass.aiff >/dev/null 2>&1 &
+  n=${block%/*} total=${block#*/}
+  [ "$n" -lt "$total" ] && start "$min" "$label" $((n + 1)) "$total" && status
+  return 0
+}
+
+case "$1" in
+  stop) rm -f "$state" ;;
+  status) status ;;
+  ''|*[!0-9]*|0) usage ;;
+  *)
+    case "${3:-1}" in ''|*[!0-9]*|0) usage ;; esac
+    start "$1" "${2:-deep}" 1 "${3:-1}"
+    ;;
+esac

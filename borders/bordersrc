@@ -1,0 +1,10 @@
+#!/bin/bash
+# Run by borders at startup when it is launched without arguments (brew
+# services). Colours: wallsync's rendered file, else the H=205 sample palette.
+ACTIVE=0xB3E2E6E9     # lineHi
+INACTIVE=0x47AFB9C0   # line
+COLORS="$HOME/.cache/wallsync/out/borders.sh"
+[ -f "$COLORS" ] && source "$COLORS"
+
+borders style=round width=1.5 hidpi=on order=above blacklist="wallsync" \
+        active_color=$ACTIVE inactive_color=$INACTIVE

@@ -1,0 +1,36 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "Main.dc.html": {"h": 956, "title": "1 · Build — orderbook session", "w": 1470, "x": 0, "y": 0},
+    "Sessions.dc.html": {"h": 956, "title": "3 · Switch — session picker", "w": 1470, "x": 0, "y": 1076},
+    "Stack.dc.html": {"h": 956, "title": "4 · The stack", "w": 1470, "x": 1550, "y": 1076},
+    "Study.dc.html": {"h": 956, "title": "2 · Study — zen mode + ask popup", "w": 1470, "x": 1550, "y": 0},
+    "EngineA.dc.html": {"h": 956, "title": "A · Monolith (chosen) — skew carousel, mono palette, random wipe / grow, Fira Code", "w": 1470, "x": 0, "y": 0, "page": "engine", "is_interactive": true},
+    "EngineB.dc.html": {"h": 956, "title": "B · Tonal — dock picker, Material You palette, circle grow", "w": 1470, "x": 1550, "y": 0, "page": "engine", "is_interactive": true},
+    "EngineC.dc.html": {"h": 956, "title": "C · Glass — grid sheet, liquid glass, blur zoom", "w": 1470, "x": 0, "y": 1076, "page": "engine", "is_interactive": true},
+    "EngineD.dc.html": {"h": 956, "title": "D · Paper — filmstrip, light study palette, ink wipe", "w": 1470, "x": 1550, "y": 1076, "page": "engine", "is_interactive": true}
+  },
+  "createdOnFiles": {"at": "2026-10-14T09:40:35Z", "v": 1},
+  "designSystems": [],
+  "launch": {"view": "canvas", "page": "engine"},
+  "notes": {
+    "title": {"kind": "title1", "maxW": 3020, "text": "Terminal rice — the vision", "w": 240, "x": 0, "y": -300},
+    "engineTitle": {"kind": "title1", "maxW": 3020, "text": "Wallpaper + theme engine — four directions", "x": 0, "y": -300, "page": "engine"}
+  },
+  "order": [
+    "Main.dc.html",
+    "Study.dc.html",
+    "Sessions.dc.html",
+    "Stack.dc.html",
+    "EngineA.dc.html",
+    "EngineB.dc.html",
+    "EngineC.dc.html",
+    "EngineD.dc.html"
+  ],
+  "pages": [
+    {"id": "vision", "name": "Terminal vision"},
+    {"id": "engine", "name": "Wallpaper engine"}
+  ],
+  "title": "Terminal Rice Vision"
+}

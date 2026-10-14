@@ -1,0 +1,81 @@
+{
+  "theme": "dark-ansi",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "async": true,
+            "command": "PATH=\"$PATH:/opt/homebrew/bin\"; sketchybar --trigger claude_state STATE=running ID=$PPID SESSION=\"$({ [ -n \"$TMUX_PANE\" ] && tmux display-message -p -t \"$TMUX_PANE\" \"#S\"; } 2>/dev/null || basename \"$PWD\")\" >/dev/null 2>&1 || true"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "async": true,
+            "command": "PATH=\"$PATH:/opt/homebrew/bin\"; sketchybar --trigger claude_state STATE=running ID=$PPID SESSION=\"$({ [ -n \"$TMUX_PANE\" ] && tmux display-message -p -t \"$TMUX_PANE\" \"#S\"; } 2>/dev/null || basename \"$PWD\")\" >/dev/null 2>&1 || true"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "permission_prompt|elicitation_dialog|elicitation_url_dialog",
+        "hooks": [
+          {
+            "type": "command",
+            "async": true,
+            "command": "PATH=\"$PATH:/opt/homebrew/bin\"; sketchybar --trigger claude_state STATE=waiting ID=$PPID SESSION=\"$({ [ -n \"$TMUX_PANE\" ] && tmux display-message -p -t \"$TMUX_PANE\" \"#S\"; } 2>/dev/null || basename \"$PWD\")\" >/dev/null 2>&1 || true"
+          }
+        ]
+      },
+      {
+        "matcher": "idle_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "async": true,
+            "command": "PATH=\"$PATH:/opt/homebrew/bin\"; sketchybar --trigger claude_state STATE=idle ID=$PPID SESSION=\"$({ [ -n \"$TMUX_PANE\" ] && tmux display-message -p -t \"$TMUX_PANE\" \"#S\"; } 2>/dev/null || basename \"$PWD\")\" >/dev/null 2>&1 || true"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "timeout": 5,
+            "command": "PATH=\"$PATH:/opt/homebrew/bin\"; sketchybar --trigger claude_state STATE=idle ID=$PPID SESSION=\"$({ [ -n \"$TMUX_PANE\" ] && tmux display-message -p -t \"$TMUX_PANE\" \"#S\"; } 2>/dev/null || basename \"$PWD\")\" >/dev/null 2>&1 || true"
+          }
+        ]
+      }
+    ],
+    "StopFailure": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "timeout": 5,
+            "command": "PATH=\"$PATH:/opt/homebrew/bin\"; sketchybar --trigger claude_state STATE=idle ID=$PPID SESSION=\"$({ [ -n \"$TMUX_PANE\" ] && tmux display-message -p -t \"$TMUX_PANE\" \"#S\"; } 2>/dev/null || basename \"$PWD\")\" >/dev/null 2>&1 || true"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PATH=\"$PATH:/opt/homebrew/bin\"; sketchybar --trigger claude_state STATE=idle ID=$PPID SESSION=\"$({ [ -n \"$TMUX_PANE\" ] && tmux display-message -p -t \"$TMUX_PANE\" \"#S\"; } 2>/dev/null || basename \"$PWD\")\" >/dev/null 2>&1 || true"
+          }
+        ]
+      }
+    ]
+  }
+}

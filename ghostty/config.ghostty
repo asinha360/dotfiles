@@ -1,0 +1,20 @@
+# Monolith: translucent panel with thin padding. Colours come from wallsync
+# (rendered include below); opacity needs a full restart on macOS, so it stays fixed.
+font-family = FiraCode Nerd Font
+font-size = 13
+
+background-opacity = 0.70
+background-blur = 20
+macos-titlebar-style = hidden
+
+window-padding-x = 14
+window-padding-y = 10
+window-padding-balance = true
+
+macos-option-as-alt = left
+window-save-state = always
+confirm-close-surface = false
+shell-integration-features = no-cursor
+
+# Palette, fg/bg, cursor and selection. Must stay the last line.
+config-file = ?/Users/sniperzero360/.cache/wallsync/out/ghostty.conf

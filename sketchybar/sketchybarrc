@@ -1,0 +1,82 @@
+#!/bin/bash
+# Monolith bar (board A): a transparent bar carrying three floating pills.
+# Stats come from bar-stats, the claude item from Claude Code hooks
+# (claude_state event), colours from wallsync.
+
+PLUGIN_DIR="$CONFIG_DIR/plugins"
+BIN="$HOME/.local/bin"
+
+# Defaults are the H=205 sample palette; wallsync's rendered file overrides them.
+PILL=0x9E121517
+LINE=0x47AFB9C0
+LINE_HI=0xB3E2E6E9
+FG=0xFFD7DCE0
+SUB=0xFFACB4B9
+HI=0xFFEDF0F2
+COLORS="$HOME/.cache/wallsync/out/sketchybar.sh"
+[ -f "$COLORS" ] && source "$COLORS"
+
+FONT="FiraCode Nerd Font:Regular:11.0"
+pill=(background.color=$PILL background.border_color=$LINE background.border_width=1
+      background.corner_radius=6 background.height=26)
+
+# The M2 Air notch is 179pt wide; notch_width=200 keeps `e` items ~10pt clear of it.
+sketchybar --bar position=top height=34 y_offset=6 margin=10 color=0x00000000 \
+                 topmost=off shadow=off padding_left=0 padding_right=0 notch_width=200
+
+sketchybar --default label.font="$FONT" icon.font="$FONT" label.color=$FG \
+                     padding_left=0 padding_right=0 \
+                     label.padding_left=0 label.padding_right=0 \
+                     icon.padding_left=0 icon.padding_right=0
+
+sketchybar --add event claude_state
+
+# Left pill. Item padding_left/right is the gap; a bracket spans its members
+# plus the outer paddings of the first and last one.
+sketchybar --add item cpu left --set cpu label="CPU --%" padding_left=12 \
+           --add item gpu left --set gpu label="GPU --%" padding_left=18 \
+           --add item ram left --set ram label="RAM --%" padding_left=18 \
+           --add item temp left --set temp label="--°C" padding_left=18 padding_right=12 \
+           --add bracket pill.stats cpu gpu ram temp --set pill.stats "${pill[@]}"
+
+# Centre pill: `clock` sits at the centre of plain displays, `clock.notch`
+# just right of the notch. displays.sh assigns each to its displays.
+sketchybar --add item clock center \
+           --set clock padding_left=14 padding_right=14 update_freq=10 \
+                       script="$PLUGIN_DIR/clock.sh" \
+           --subscribe clock system_woke \
+           --add item clock.notch e \
+           --set clock.notch padding_left=14 padding_right=14 \
+                             script="$PLUGIN_DIR/displays.sh" \
+           --subscribe clock.notch display_change system_woke \
+           --add bracket pill.clock clock --set pill.clock "${pill[@]}" \
+           --add bracket pill.clock.notch clock.notch --set pill.clock.notch "${pill[@]}"
+
+# Right pill, added right to left. An empty label with zero padding hides an
+# item (never toggle drawing: SketchyBar #787 on Tahoe).
+sketchybar --add item wall right \
+           --set wall label="⌥W wall" label.color=$HI padding_right=6 \
+                      label.padding_left=8 label.padding_right=8 \
+                      label.background.drawing=on label.background.color=0x00000000 \
+                      label.background.border_color=$LINE_HI label.background.border_width=1 \
+                      label.background.corner_radius=4 label.background.height=20 \
+                      click_script="$BIN/wallsync pick" \
+           --add item vol right \
+           --set vol padding_right=14 script="$PLUGIN_DIR/volume.sh" \
+           --subscribe vol volume_change \
+           --add item claude right \
+           --set claude label.color=$SUB label.highlight_color=$HI update_freq=30 \
+                        script="$PLUGIN_DIR/claude.sh" \
+           --subscribe claude claude_state \
+           --add item focus right \
+           --set focus padding_left=12 padding_right=14 update_freq=1 \
+                       script="$PLUGIN_DIR/focus.sh" \
+           --subscribe focus mouse.clicked \
+           --add bracket pill.right focus claude vol wall --set pill.right "${pill[@]}"
+
+"$PLUGIN_DIR/displays.sh"
+
+# Detached so SketchyBar does not wait on it (#807); it replaces any older instance.
+[ -x "$BIN/bar-stats" ] && nohup "$BIN/bar-stats" >/dev/null 2>&1 &
+
+sketchybar --update

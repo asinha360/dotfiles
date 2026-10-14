@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" preserveAspectRatio="xMidYMid slice">
+<defs>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#8fa9a0"/>
+<stop offset="0.55" stop-color="#bccfc8"/>
+<stop offset="1" stop-color="#7f9c93"/>
+</linearGradient>
+<linearGradient id="mist" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#c8d8d2" stop-opacity="0"/>
+<stop offset="0.5" stop-color="#d2e0db" stop-opacity="0.85"/>
+<stop offset="1" stop-color="#c8d8d2" stop-opacity="0"/>
+</linearGradient>
+</defs>
+<rect width="1600" height="1000" fill="url(#sky)"/>
+<path d="M0 560 C300 500 600 560 900 520 C1200 480 1400 540 1600 510 L1600 1000 L0 1000Z" fill="#6d8b83" opacity="0.7"/>
+<rect y="520" width="1600" height="180" fill="url(#mist)"/>
+<path d="M0 690 C320 630 640 710 1000 650 C1300 610 1450 670 1600 650 L1600 1000 L0 1000Z" fill="#3f5d55"/>
+<path d="M500 690 L520 640 L540 690Z M560 680 L582 625 L604 680Z M620 672 L640 628 L660 672Z M1060 650 L1080 600 L1100 650Z M1120 642 L1142 590 L1164 642Z M1180 640 L1198 598 L1216 640Z" fill="#2c4741"/>
+<path d="M0 830 C400 780 800 850 1200 800 C1400 780 1500 810 1600 800 L1600 1000 L0 1000Z" fill="#1f342f"/>
+<path d="M60 830 L95 640 L130 830Z M150 820 L178 690 L206 820Z M230 825 L270 600 L310 825Z M330 818 L358 700 L386 818Z M1240 805 L1270 660 L1300 805Z M1320 810 L1360 590 L1400 810Z M1420 808 L1448 690 L1476 808Z M1500 806 L1535 630 L1570 806Z" fill="#14262a"/>
+</svg>

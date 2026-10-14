@@ -1,0 +1,37 @@
+#!/bin/bash
+# Streams macmon samples into the bar's left pill: one sketchybar call per
+# sample. Single instance: a new start replaces the running one. If macmon
+# dies the pill shows -- and the pipe restarts; exits when SketchyBar is gone
+# (sketchybarrc starts it again).
+PATH="$PATH:/opt/homebrew/bin"
+pidfile="$HOME/.cache/bar-stats.pid"
+mkdir -p "${pidfile%/*}"
+old=$(cat "$pidfile" 2>/dev/null)
+# Claim the pidfile before killing the old instance, so its exit trap keeps it.
+echo $$ > "$pidfile"
+trap '[ "$(cat "$pidfile" 2>/dev/null)" = $$ ] && rm -f "$pidfile"' EXIT
+if [ -n "$old" ] && [ "$old" != $$ ] &&
+   ps -p "$old" -o command= 2>/dev/null | grep -q '^/bin/bash .*bar-stats$'; then
+  pkill -P "$old"
+  kill "$old"
+fi
+
+# cpu%, gpu%, ram%, cpu temperature (°C, or -- when the sensor reports nothing).
+# Lines that are not a usable sample are skipped instead of ending jq.
+filter='(fromjson
+  | [ (.cpu_active_ratio // 0) * 100 | round ]
+  + [ (.gpu_active_ratio // 0) * 100 | round ]
+  + [ .memory | if .ram_total > 0 then .ram_usage / .ram_total * 100 | round else "--" end ]
+  + [ .temp.cpu_temp_avg // 0 | if . > 0 then round else "--" end ]
+  | @tsv)?'
+
+while pgrep -qx sketchybar; do
+  while IFS=$'\t' read -r cpu gpu ram temp; do
+    pgrep -qx sketchybar || exit 0
+    sketchybar --set cpu label="CPU $cpu%" --set gpu label="GPU $gpu%" \
+               --set ram label="RAM $ram%" --set temp label="${temp}°C"
+  done < <(macmon pipe -i 2000 | jq --unbuffered -R -r "$filter")
+  sketchybar --set cpu label="CPU --%" --set gpu label="GPU --%" \
+             --set ram label="RAM --%" --set temp label="--°C"
+  sleep 2
+done

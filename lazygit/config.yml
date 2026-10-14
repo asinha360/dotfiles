@@ -1,0 +1,12 @@
+# Monolith: ANSI colour names only, so lazygit follows the wallsync palette.
+# white = fg; blue is the palette's muted, hue-pulled blue, used as the dim border.
+gui:
+  theme:
+    activeBorderColor: [white, bold]
+    inactiveBorderColor: [blue]
+    searchingActiveBorderColor: [white, bold]
+    optionsTextColor: [blue]
+git:
+  diffRenderers:
+    - colorArg: always
+      command: delta --paging=never

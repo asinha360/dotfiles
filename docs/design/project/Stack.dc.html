@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The stack</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&amp;family=IBM+Plex+Mono:wght@400;600&amp;family=JetBrains+Mono:wght@400;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 1470px; height: 956px; box-sizing: border-box; padding: 52px 64px; display: flex; flex-direction: column; gap: 26px; background-color: {{p.bg}}; font-family: {{font}}; font-size: 13px; line-height: 19px; color: {{p.fg}}">
+
+  <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 24px">
+    <div style="display: flex; align-items: baseline; gap: 18px">
+      <h1 style="margin: 0; font-size: 30px; line-height: 36px; font-weight: 700; color: {{p.fg}}">The stack</h1>
+      <span style="color: {{p.sub}}">five layers · one palette · one font</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px; font-size: 12px; color: {{p.sub}}">
+      <span style="display: flex; align-items: center; gap: 6px"><span style="padding: 0 7px; border-radius: 4px; background-color: {{p.accent}}; color: {{p.on}}; font-weight: 700">P1</span>first sitting</span>
+      <span style="display: flex; align-items: center; gap: 6px"><span style="padding: 0 7px; border-radius: 4px; background-color: {{p.accent2}}; color: {{p.on}}; font-weight: 700">P2</span>second sitting</span>
+      <span style="display: flex; align-items: center; gap: 6px"><span style="padding: 0 6px; border-radius: 4px; border: 1px solid {{p.sub}}; color: {{p.sub}}; font-weight: 700">P3</span>later, optional</span>
+    </div>
+  </div>
+
+  <div style="flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 372px; gap: 48px">
+
+    <div style="display: flex; flex-direction: column">
+      <sc-for list="{{layers}}" as="L" hint-placeholder-count="5">
+        <div style="display: grid; grid-template-columns: 168px minmax(0, 1fr); gap: 20px; padding: 16px 0; border-top: 1px solid {{p.line}}">
+          <div style="display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 12px; color: {{p.sub}}">{{L.num}}</span>
+            <span style="font-size: 16px; line-height: 22px; font-weight: 700; color: {{p.fg}}">{{L.name}}</span>
+            <span style="font-size: 12px; color: {{p.sub}}">{{L.note}}</span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+            <sc-for list="{{L.tools}}" as="t" hint-placeholder-count="3">
+              <div style="padding: 8px 10px; border-radius: 8px; background-color: {{p.alt}}; display: flex; flex-direction: column; gap: 3px">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+                  <span style="font-weight: 700; color: {{p.fg}}">{{t.name}}</span>
+                  <span style="flex: none; padding: 0 6px; border-radius: 4px; font-size: 11px; line-height: 17px; font-weight: 700; background-color: {{t.pb}}; color: {{t.pc}}; border: 1px solid {{t.pl}}">{{t.ph}}</span>
+                </div>
+                <span style="font-size: 12px; line-height: 16px; color: {{p.sub}}">{{t.what}}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 26px">
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <span style="font-size: 12px; color: {{p.sub}}">palette · {{theme}}</span>
+        <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px">
+          <sc-for list="{{swatches}}" as="s" hint-placeholder-count="12">
+            <div style="display: flex; flex-direction: column; gap: 4px">
+              <span style="height: 30px; border-radius: 6px; background-color: {{s.hex}}; border: 1px solid {{p.line}}"></span>
+              <span style="font-size: 11px; line-height: 14px; color: {{p.fg}}">{{s.name}}</span>
+              <span style="font-size: 11px; line-height: 14px; color: {{p.sub}}">{{s.hex}}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <span style="font-size: 12px; color: {{p.sub}}">type · {{fontName}} Nerd Font, 13pt</span>
+        <span style="font-size: 22px; line-height: 30px; color: {{p.fg}}">0O il1 {} [] -&gt; != &lt;= 0x7f</span>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <span style="font-size: 12px; color: {{p.sub}}">keys · prefix C-b</span>
+        <sc-for list="{{keys}}" as="k" hint-placeholder-count="8">
+          <div style="display: flex; align-items: center; gap: 12px; height: 24px">
+            <span style="width: 92px; flex: none; text-align: center; border-radius: 4px; background-color: {{p.alt}}; color: {{p.accent}}; font-weight: 700">{{k.key}}</span>
+            <span style="color: {{p.fg}}">{{k.does}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["Tokyo Night","Catppuccin Mocha","Kanagawa Wave","Rosé Pine","Gruvbox Material"],"default":"Tokyo Night"},"font":{"editor":"enum","options":["JetBrains Mono","IBM Plex Mono","Fira Code","Source Code Pro"],"default":"JetBrains Mono"},"$preview":{"width":1470,"height":956}}'>
+class Component extends DCLogic {
+  pal() {
+    const T = {
+      'Tokyo Night': { bg: '#1a1b26', alt: '#1f2335', sel: '#292e42', line: '#3b4261', fg: '#c0caf5', sub: '#a9b1d6', dim: '#565f89', accent: '#7aa2f7', accent2: '#bb9af7', ok: '#9ece6a', warn: '#e0af68', err: '#f7768e', info: '#7dcfff', on: '#16161e' },
+      'Catppuccin Mocha': { bg: '#1e1e2e', alt: '#181825', sel: '#313244', line: '#45475a', fg: '#cdd6f4', sub: '#bac2de', dim: '#7f849c', accent: '#89b4fa', accent2: '#cba6f7', ok: '#a6e3a1', warn: '#f9e2af', err: '#f38ba8', info: '#89dceb', on: '#11111b' },
+      'Kanagawa Wave': { bg: '#1f1f28', alt: '#16161d', sel: '#2a2a37', line: '#54546d', fg: '#dcd7ba', sub: '#c8c093', dim: '#727169', accent: '#7e9cd8', accent2: '#957fb8', ok: '#98bb6c', warn: '#e6c384', err: '#e46876', info: '#7fb4ca', on: '#16161d' },
+      'Rosé Pine': { bg: '#191724', alt: '#1f1d2e', sel: '#26233a', line: '#403d52', fg: '#e0def4', sub: '#908caa', dim: '#6e6a86', accent: '#c4a7e7', accent2: '#ebbcba', ok: '#9ccfd8', warn: '#f6c177', err: '#eb6f92', info: '#9ccfd8', on: '#191724' },
+      'Gruvbox Material': { bg: '#282828', alt: '#32302f', sel: '#3c3836', line: '#504945', fg: '#d4be98', sub: '#ddc7a1', dim: '#7c6f64', accent: '#7daea3', accent2: '#d3869b', ok: '#a9b665', warn: '#d8a657', err: '#ea6962', info: '#89b482', on: '#1d2021' }
+    };
+    const name = T[this.props.theme] ? this.props.theme : 'Tokyo Night';
+    return { name: name, p: Object.assign({}, T[name]) };
+  }
+
+  renderVals() {
+    const { name, p } = this.pal();
+    const fonts = { 'JetBrains Mono': 1, 'IBM Plex Mono': 1, 'Fira Code': 1, 'Source Code Pro': 1 };
+    const f = fonts[this.props.font] ? this.props.font : 'JetBrains Mono';
+    const badge = (ph) => ph === 'P1'
+      ? { ph: ph, pb: p.accent, pc: p.on, pl: p.accent }
+      : ph === 'P2'
+        ? { ph: ph, pb: p.accent2, pc: p.on, pl: p.accent2 }
+        : { ph: ph, pb: 'transparent', pc: p.sub, pl: p.sub };
+    const tool = (n, w, ph) => Object.assign({ name: n, what: w }, badge(ph));
+    const layers = [
+      { num: '01', name: 'Desktop', note: 'macOS', tools: [
+        tool('AeroSpace', 'tiling + named workspaces; replaces Rectangle', 'P3'),
+        tool('SketchyBar', 'workspaces and system stats in one bar', 'P3'),
+        tool('JankyBorders', 'accent border on the focused window', 'P3')
+      ] },
+      { num: '02', name: 'Terminal', note: 'replaces Terminal.app', tools: [
+        tool('Ghostty', 'native GPU terminal, true glyph rendering', 'P1'),
+        tool('Nerd Font', 'one font everywhere, real icons', 'P1'),
+        tool('One palette', 'terminal, tmux, nvim, lazygit, Claude Code', 'P1')
+      ] },
+      { num: '03', name: 'tmux', note: 'keeps your conf', tools: [
+        tool('Theme', 'your pills.conf, rounded, palette hex', 'P1'),
+        tool('resurrect + continuum', 'sessions survive reboots', 'P1'),
+        tool('Popups', 'lazygit, ask Claude, notes', 'P1'),
+        tool('sesh', 'a session per project, fuzzy switch', 'P2'),
+        tool('Agent flags', 'Claude Code hooks mark running / needs you', 'P2'),
+        tool('Zen + timer', 'one key strips the chrome; focus block in bar', 'P2')
+      ] },
+      { num: '04', name: 'Shell', note: 'zsh', tools: [
+        tool('starship', 'prompt: dir, git, last command time', 'P2'),
+        tool('zoxide + fzf', 'jump to dirs, fuzzy history and files', 'P2'),
+        tool('autosuggest + highlight', 'ghost-text completions, live syntax color', 'P2'),
+        tool('eza + bat', 'readable ls and cat', 'P2')
+      ] },
+      { num: '05', name: 'Tools', note: 'TUI apps', tools: [
+        tool('lazygit', 'git in a popup', 'P1'),
+        tool('watchexec + hyperfine', 'rebuild on save, CLI benchmarks', 'P2'),
+        tool('btop + yazi', 'system monitor, file manager', 'P2'),
+        tool('LazyVim', 'clangd, verible, pyright', 'P3')
+      ] }
+    ];
+    const swatches = ['bg', 'alt', 'sel', 'line', 'fg', 'sub', 'dim', 'accent', 'accent2', 'ok', 'warn', 'err'].map((k) => ({ name: k, hex: p[k] }));
+    const keys = [
+      { key: 'T', does: 'switch session' },
+      { key: 'g', does: 'lazygit popup' },
+      { key: 'a', does: 'ask Claude popup' },
+      { key: 'Z', does: 'zen on / off' },
+      { key: 't', does: 'start / stop focus block' },
+      { key: 'h', does: 'cheatsheet' },
+      { key: 'C-s  C-r', does: 'save / restore sessions' },
+      { key: 'C-h/j/k/l', does: 'move across nvim and tmux, no prefix' }
+    ];
+    return { p: p, theme: name, fontName: f, font: "'" + f + "', ui-monospace, monospace", layers: layers, swatches: swatches, keys: keys };
+  }
+}
+</script>
+</body>
+</html>

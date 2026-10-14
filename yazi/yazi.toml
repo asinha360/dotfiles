@@ -1,0 +1,6 @@
+[mgr]
+# Single column: the vault panel is ~38 cols wide
+ratio = [0, 1, 0]
+show_hidden = false
+sort_by = "natural"
+linemode = "none"

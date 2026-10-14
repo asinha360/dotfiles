@@ -1,0 +1,69 @@
+#!/bin/bash
+# vault-due [--watch]: notes whose frontmatter sr-due falls within the next 7 days,
+# soonest first, as 'name<TAB>label'. Name is the note's H1 (else its file name).
+VAULT=${VAULT:-$HOME/projects/study-vault}
+
+day() { date -j -f '%Y-%m-%d %H:%M:%S' "$1 12:00:00" +%s; }
+
+list() {
+  local today horizon now d path name label tty width pad color
+  today=$(date +%Y-%m-%d)
+  horizon=$(date -v+7d +%Y-%m-%d)
+  now=$(day "$today")
+  [ -t 1 ] && tty=1 && width=$(stty size </dev/tty 2>/dev/null | cut -d' ' -f2)
+  [ "${width:-0}" -gt 0 ] 2>/dev/null || width=40
+  [ -n "$tty" ] && printf '\033[90mREVIEW QUEUE\033[0m\n'
+  [ -d "$VAULT" ] || return 0
+
+  # sr-due only counts inside the leading frontmatter block, not in code samples.
+  rg --no-config --multiline --pcre2 --no-heading --with-filename --max-count 1 --glob '*.md' \
+    --only-matching --replace '$1' \
+    '\A---\r?\n(?:(?!---[ \t\r]*$)[^\n]*\n)*?sr-due:[ \t]*(\d{4}-\d{2}-\d{2})[ \t]*\r?$' \
+    "$VAULT" 2>/dev/null |
+    while IFS= read -r line; do
+      d=${line##*:}
+      [[ "$d" > "$horizon" ]] || printf '%s\t%s\n' "$d" "${line%:*}"
+    done |
+    sort |
+    {
+      n=0
+      while IFS=$'\t' read -r d path; do
+        n=$((n + 1))
+        name=$(awk 'NR == 1 && /^---/ { fm = 1; next } fm && /^---/ { fm = 0; next } /^```/ { fence = !fence } !fm && !fence && /^# / { sub(/^# +/, ""); print; exit }' "$path")
+        [ -n "$name" ] || name=$(basename "$path" .md)
+        name=$(printf '%s' "$name" | tr -d '\r' | tr '[:upper:]' '[:lower:]')
+        if [ "$d" = "$today" ]; then
+          label=today
+        elif [[ "$d" < "$today" ]]; then
+          label="overdue $(((now - $(day "$d") + 43200) / 86400))d"
+        else
+          label=$(date -j -f '%Y-%m-%d' "$d" +%a)
+        fi
+        if [ -n "$tty" ]; then
+          # Right-align the label like the vault panel on board A; due labels in hi, upcoming in dim.
+          case $label in today | overdue*) color=97 ;; *) color=90 ;; esac
+          pad=$((width - ${#label} - 1))
+          # Truncate a name that does not fit so it never runs into the label.
+          [ "${#name}" -lt "$pad" ] || name="${name:0:$((pad > 2 ? pad - 2 : 0))}…"
+          printf '%s%*s\033[%sm%s\033[0m\n' "$name" $((pad > ${#name} ? pad - ${#name} : 1)) '' "$color" "$label"
+        else
+          printf '%s\t%s\n' "$name" "$label"
+        fi
+      done
+      [ "$n" -gt 0 ] || [ -z "$tty" ] || printf '\033[90mnothing due\033[0m\n'
+    }
+}
+
+if [ "$1" = --watch ]; then
+  # A resize interrupts the wait below, so the panel redraws at the new width.
+  trap : WINCH
+  while :; do
+    clear
+    list
+    sleep 300 &
+    wait $!
+    kill $! 2>/dev/null && wait $! 2>/dev/null
+  done
+else
+  list
+fi

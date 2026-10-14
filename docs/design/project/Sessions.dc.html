@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Session picker</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&amp;family=IBM+Plex+Mono:wght@400;600&amp;family=JetBrains+Mono:wght@400;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 1470px; height: 956px; position: relative; overflow: hidden; background-color: {{p.wall}}; background-image: radial-gradient({{p.dot}} 1px, transparent 1.5px); background-size: 28px 28px; font-family: {{font}}; font-size: 13px; line-height: 19px; color: {{p.fg}}">
+
+  <div style="position: absolute; left: 0; top: 0; right: 0; height: 34px; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; background-color: {{p.bar}}; font-size: 12px">
+    <div style="display: flex; align-items: center; gap: 4px">
+      <span style="padding: 0 10px; height: 22px; line-height: 22px; border-radius: 6px; background-color: {{p.accent}}; color: {{p.on}}; font-weight: 700">1 build</span>
+      <span style="padding: 0 10px; color: {{p.sub}}">2 study</span>
+      <span style="padding: 0 10px; color: {{p.sub}}">3 notes</span>
+      <span style="padding: 0 10px; color: {{p.sub}}">4 web</span>
+      <span style="padding: 0 10px; color: {{p.sub}}">5 ops</span>
+      <span style="margin: 0 8px; color: {{p.line}}">│</span>
+      <span style="color: {{p.fg}}">Ghostty</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 20px; color: {{p.dim}}">
+      <span>cpu <span style="color: {{p.fg}}">31%</span></span>
+      <span>mem <span style="color: {{p.fg}}">11.6G</span></span>
+      <span>bat <span style="color: {{p.ok}}">81%</span></span>
+      <span style="color: {{p.fg}}">Wed 14 Oct  21:39</span>
+    </div>
+  </div>
+
+  <div style="position: absolute; left: 12px; top: 44px; width: 1446px; height: 900px; box-sizing: border-box; border: 2px solid {{p.accent}}; border-radius: 12px; background-color: {{p.bg}}; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 18px 48px rgba(0,0,0,0.45)">
+
+    <div style="height: 32px; flex: none; display: flex; align-items: center; justify-content: space-between; padding: 0 10px">
+      <div style="display: flex; align-items: center; gap: 2px">
+        <span style="padding: 0 12px; height: 22px; line-height: 22px; border-radius: 999px; background-color: {{p.accent2}}; color: {{p.on}}; font-weight: 700">orderbook</span>
+        <span style="margin-left: 8px; padding: 0 12px; height: 22px; line-height: 22px; border-radius: 999px; background-color: {{p.accent}}; color: {{p.on}}; font-weight: 700">1 code ●</span>
+        <span style="padding: 0 12px; color: {{p.sub}}">2 review</span>
+        <span style="padding: 0 12px; color: {{p.sub}}">3 notes</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 16px; color: {{p.dim}}">
+        <span>claude <span style="color: {{p.info}}">● orderbook</span>  <span style="color: {{p.warn}}; font-weight: 700">! fpga-eth</span></span>
+        <span style="padding: 0 12px; height: 20px; line-height: 20px; border-radius: 999px; border: 1px solid {{p.ok}}; color: {{p.ok}}">◷ 16:51 deep</span>
+        <span style="color: {{p.sub}}">21:39</span>
+      </div>
+    </div>
+
+    <div style="flex: 1; min-height: 0; display: flex; position: relative">
+      <div style="width: 822px; flex: none; border-right: 2px solid {{p.accent}}; padding: 30px 0 0 64px; box-sizing: border-box; overflow: hidden">
+        <sc-for list="{{bgLeft}}" as="l" hint-placeholder-count="30">
+          <div style="height: 19px; white-space: pre; color: {{p.line}}">{{l}}</div>
+        </sc-for>
+      </div>
+      <div style="flex: 1; min-width: 0; padding: 30px 0 0 14px; overflow: hidden">
+        <sc-for list="{{bgRight}}" as="l" hint-placeholder-count="20">
+          <div style="height: 19px; white-space: pre; color: {{p.line}}">{{l}}</div>
+        </sc-for>
+      </div>
+
+      <div style="position: absolute; left: 221px; top: 120px; width: 1000px; height: 580px; box-sizing: border-box; border: 1px solid {{p.accent}}; border-radius: 10px; background-color: {{p.bg}}; display: flex; flex-direction: column; box-shadow: 0 16px 40px rgba(0,0,0,0.45)">
+        <div style="position: absolute; left: 18px; top: -10px; padding: 0 6px; background-color: {{p.bg}}; color: {{p.accent}}; font-size: 12px; font-weight: 700">sessions · C-b T</div>
+
+        <div style="flex: 1; min-height: 0; display: flex">
+          <div style="width: 470px; flex: none; display: flex; flex-direction: column; padding: 18px 0 0; border-right: 1px solid {{p.line}}">
+            <div style="height: 22px; display: flex; align-items: center; justify-content: space-between; padding: 0 18px">
+              <span style="display: flex; align-items: center; gap: 8px"><span style="color: {{p.accent}}; font-weight: 700">&gt;</span><span style="width: 8px; height: 17px; background-color: {{p.fg}}"></span></span>
+              <span style="color: {{p.dim}}; font-size: 12px">8/8</span>
+            </div>
+            <div style="height: 1px; margin: 8px 18px 8px; background-color: {{p.line}}"></div>
+            <sc-for list="{{items}}" as="it" hint-placeholder-count="8">
+              <div style="height: 30px; display: flex; align-items: center; gap: 10px; padding: 0 18px 0 12px; background-color: {{it.bg}}">
+                <span style="width: 3px; height: 18px; background-color: {{it.mark}}"></span>
+                <span style="color: {{it.ic}}">{{it.icon}}</span>
+                <span style="flex: 1; min-width: 0; white-space: pre; overflow: hidden; text-overflow: ellipsis; color: {{it.nc}}; font-weight: {{it.fw}}">{{it.name}}</span>
+                <span style="white-space: pre; font-size: 12px; color: {{it.sc}}">{{it.state}}</span>
+              </div>
+            </sc-for>
+            <div style="flex: 1"></div>
+            <div style="height: 36px; display: flex; align-items: center; gap: 14px; padding: 0 18px; font-size: 12px; color: {{p.dim}}; border-top: 1px solid {{p.line}}">
+              <span><span style="color: {{p.accent}}">enter</span> switch</span>
+              <span><span style="color: {{p.accent}}">^d</span> kill</span>
+              <span><span style="color: {{p.accent}}">^x</span> dirs</span>
+              <span><span style="color: {{p.accent}}">^t</span> sessions</span>
+            </div>
+          </div>
+
+          <div style="flex: 1; min-width: 0; padding: 22px 24px 0">
+            <div style="white-space: pre"><span style="color: {{p.accent2}}; font-weight: 700">orderbook</span><span style="color: {{p.dim}}">  ~/projects/orderbook · 3 windows</span></div>
+            <div style="height: 19px"></div>
+            <div style="white-space: pre"><span style="color: {{p.accent}}; font-weight: 700">1 code</span>  <span style="color: {{p.info}}">●</span></div>
+            <div style="white-space: pre"><span style="color: {{p.line}}">  ├ </span><span style="color: {{p.fg}}">nvim       </span><span style="color: {{p.sub}}">order_book.hpp</span></div>
+            <div style="white-space: pre"><span style="color: {{p.line}}">  ├ </span><span style="color: {{p.fg}}">claude     </span><span style="color: {{p.sub}}">cancel-heavy bench  </span><span style="color: {{p.info}}">running 14s</span></div>
+            <div style="white-space: pre"><span style="color: {{p.line}}">  └ </span><span style="color: {{p.fg}}">watchexec  </span><span style="color: {{p.sub}}">bench</span></div>
+            <div style="height: 19px"></div>
+            <div style="white-space: pre; color: {{p.fg}}; font-weight: 700">2 review</div>
+            <div style="white-space: pre"><span style="color: {{p.line}}">  └ </span><span style="color: {{p.fg}}">lazygit</span></div>
+            <div style="height: 19px"></div>
+            <div style="white-space: pre; color: {{p.fg}}; font-weight: 700">3 notes</div>
+            <div style="white-space: pre"><span style="color: {{p.line}}">  └ </span><span style="color: {{p.fg}}">nvim       </span><span style="color: {{p.sub}}">notes/perf-log.md</span></div>
+            <div style="height: 38px"></div>
+            <div style="height: 1px; background-color: {{p.line}}"></div>
+            <div style="height: 19px"></div>
+            <div style="white-space: pre; color: {{p.dim}}">restored by continuum after reboot · layout kept</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["Tokyo Night","Catppuccin Mocha","Kanagawa Wave","Rosé Pine","Gruvbox Material"],"default":"Tokyo Night"},"font":{"editor":"enum","options":["JetBrains Mono","IBM Plex Mono","Fira Code","Source Code Pro"],"default":"JetBrains Mono"},"$preview":{"width":1470,"height":956}}'>
+class Component extends DCLogic {
+  pal() {
+    const T = {
+      'Tokyo Night': { wall: '#101119', dot: '#1d1f2e', bar: '#16161e', bg: '#1a1b26', alt: '#1f2335', sel: '#292e42', line: '#3b4261', fg: '#c0caf5', sub: '#a9b1d6', dim: '#565f89', accent: '#7aa2f7', accent2: '#bb9af7', ok: '#9ece6a', warn: '#e0af68', err: '#f7768e', info: '#7dcfff', on: '#16161e' },
+      'Catppuccin Mocha': { wall: '#0d0d15', dot: '#1e1e2e', bar: '#11111b', bg: '#1e1e2e', alt: '#181825', sel: '#313244', line: '#45475a', fg: '#cdd6f4', sub: '#bac2de', dim: '#7f849c', accent: '#89b4fa', accent2: '#cba6f7', ok: '#a6e3a1', warn: '#f9e2af', err: '#f38ba8', info: '#89dceb', on: '#11111b' },
+      'Kanagawa Wave': { wall: '#0f0f14', dot: '#1f1f28', bar: '#16161d', bg: '#1f1f28', alt: '#16161d', sel: '#2a2a37', line: '#54546d', fg: '#dcd7ba', sub: '#c8c093', dim: '#727169', accent: '#7e9cd8', accent2: '#957fb8', ok: '#98bb6c', warn: '#e6c384', err: '#e46876', info: '#7fb4ca', on: '#16161d' },
+      'Rosé Pine': { wall: '#0e0d16', dot: '#1f1d2e', bar: '#1f1d2e', bg: '#191724', alt: '#1f1d2e', sel: '#26233a', line: '#403d52', fg: '#e0def4', sub: '#908caa', dim: '#6e6a86', accent: '#c4a7e7', accent2: '#ebbcba', ok: '#9ccfd8', warn: '#f6c177', err: '#eb6f92', info: '#9ccfd8', on: '#191724' },
+      'Gruvbox Material': { wall: '#141414', dot: '#282828', bar: '#1d2021', bg: '#282828', alt: '#32302f', sel: '#3c3836', line: '#504945', fg: '#d4be98', sub: '#ddc7a1', dim: '#7c6f64', accent: '#7daea3', accent2: '#d3869b', ok: '#a9b665', warn: '#d8a657', err: '#ea6962', info: '#89b482', on: '#1d2021' }
+    };
+    return Object.assign({}, T[this.props.theme] || T['Tokyo Night']);
+  }
+
+  renderVals() {
+    const p = this.pal();
+    const fonts = { 'JetBrains Mono': 1, 'IBM Plex Mono': 1, 'Fira Code': 1, 'Source Code Pro': 1 };
+    const f = fonts[this.props.font] ? this.props.font : 'JetBrains Mono';
+    const raw = [
+      ['tmux', 'orderbook', '● running', p.info],
+      ['tmux', 'fpga-eth', '! needs you', p.warn],
+      ['tmux', 'study', '', p.dim],
+      ['tmux', 'dotfiles', '', p.dim],
+      ['dir', '~/projects/fpga-eth', '', p.dim],
+      ['dir', '~/projects/embedded-c-drills', '', p.dim],
+      ['dir', '~/notes/math', '', p.dim],
+      ['dir', '~/projects/orderbook/bench', '', p.dim]
+    ];
+    const items = raw.map((r, i) => ({
+      icon: r[0] === 'tmux' ? '■' : '◆',
+      ic: r[0] === 'tmux' ? p.accent : p.dim,
+      name: r[1],
+      nc: r[0] === 'tmux' ? p.fg : p.sub,
+      fw: i === 0 ? '700' : '400',
+      state: r[2],
+      sc: r[3],
+      bg: i === 0 ? p.sel : 'transparent',
+      mark: i === 0 ? p.accent : 'transparent'
+    }));
+    const bgLeft = [
+      'namespace ob {', '', 'using Price   = std::int64_t;   // ticks, not dollars', 'using Qty     = std::uint32_t;',
+      'using OrderId = std::uint64_t;', '', 'struct Level { Qty total = 0; std::uint32_t count = 0; };',
+      'struct Order { Price px; Qty qty; bool bid; };', '', 'class Book {', ' public:',
+      '  void add(OrderId id, Price px, Qty qty, bool bid) {', '    Level& lv = bid ? bids_[px] : asks_[px];',
+      '    lv.total += qty;', '    ++lv.count;', '    orders_.emplace(id, Order{px, qty, bid});', '  }', '',
+      '  void cancel(OrderId id) {', '    auto it = orders_.find(id);', '    if (it == orders_.end()) return;',
+      '    const Order o = it->second;', '    orders_.erase(it);', '    if (o.bid) reduce(bids_, o.px, o.qty);',
+      '    else       reduce(asks_, o.px, o.qty);', '  }', '', ' private:', '  template <class Side>',
+      '  static void reduce(Side& side, Price px, Qty qty) {', '    auto lv = side.find(px);',
+      '    lv->second.total -= qty;', '    if (--lv->second.count == 0) side.erase(lv);', '  }', '',
+      '  std::map<Price, Level, std::greater<>> bids_;', '  std::map<Price, Level> asks_;', '  std::unordered_map<OrderId, Order> orders_;', '};'
+    ];
+    const bgRight = [
+      '> add a cancel-heavy workload to the bench and compare', '  p50/p99 against the add_only baseline', '',
+      '⏺ Read(bench/workloads.cpp)', '  ⎿  Read 84 lines', '', '⏺ Update(bench/workloads.cpp)',
+      '  ⎿  Updated with 38 additions and 2 removals', '', '⏺ Bash(cmake --build build -j && ./build/bench)',
+      '  ⎿  Running…', '', '✻ Benchmarking… (14s · esc to interrupt)', '', '', '', '', '', '', '', '', '', '', '', '',
+      '$ watchexec -e cpp,hpp -c -- cmake --build build', '[100%] Built target bench', '',
+      'workload        p50      p99     p99.9    Mmsg/s', 'add_only        41ns     88ns    210ns     21.4'
+    ];
+    return { p: p, font: "'" + f + "', ui-monospace, monospace", items: items, bgLeft: bgLeft, bgRight: bgRight };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+#!/bin/bash
+# Panel layouts: one Ghostty window per tmux session, tiled by AeroSpace.
+#   study [--dry-run]         workspace 1: [vault 340 | notes | (cava 270 over ask) 400]
+#   build [dir] [--dry-run]   workspace 2: [code | (agent over bench) 520], dir defaults to $PWD
+# `build` is a symlink to this file; the name it is run as picks the layout.
+# Idempotent: existing sessions and windows are reused, then re-arranged.
+# --dry-run prints the commands and queries nothing, as if nothing existed yet.
+set -u
+export PATH="$HOME/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+# AeroSpace starts scripts without a locale; panes would lose UTF-8
+export LANG=${LANG:-en_US.UTF-8}
+TMUX_BIN=/opt/homebrew/bin/tmux
+GHOSTTY_ID=com.mitchellh.ghostty
+
+dry=0 dir=
+for a in "$@"; do
+  case $a in
+    --dry-run) dry=1 ;;
+    *) dir=$a ;;
+  esac
+done
+
+run() {
+  if [ $dry = 1 ]; then printf '%q ' "$@"; echo; else "$@" >/dev/null; fi
+}
+
+# idle PANE: the pane sits at a shell prompt (its program was quit, or tmux-resurrect restored a bare shell)
+idle() {
+  case $(tmux display -p -t "$1" '#{pane_current_command}' 2>/dev/null) in
+    zsh | bash | sh) return 0 ;;
+  esac
+  return 1
+}
+
+# session NAME DIR [CMD]: create it detached, type CMD into its shell when new or idle, status bar off.
+# Sets created=1 when the session is new.
+session() {
+  created=0
+  if [ $dry = 1 ] || ! tmux has-session -t "=$1" 2>/dev/null; then
+    created=1
+    run tmux new-session -d -s "$1" -c "$2"
+  fi
+  if [ -n "${3:-}" ] && { [ $created = 1 ] || idle "=$1:.{top}"; }; then
+    run tmux send-keys -t "=$1:.{top}" "$3" Enter
+  fi
+  # The trailing colon makes -t resolve as an exact session name
+  run tmux set -t "=$1:" status off
+}
+
+# Cold start: no initial window and no restored windows, so the panels are Ghostty's only windows
+ghostty_start() {
+  if [ $dry = 0 ] && pgrep -xq ghostty; then return; fi
+  run open -ga Ghostty.app --args --initial-window=false --window-save-state=never
+  n=0
+  while [ $dry = 0 ] && ! pgrep -xq ghostty && [ $n -lt 50 ]; do
+    n=$((n + 1)); sleep 0.1
+  done
+}
+
+# window NAME: a Ghostty window attached to the session, unless one already is
+window() {
+  if [ $dry = 0 ] && tmux list-clients -t "=$1" -F '#{client_termname}' 2>/dev/null | grep -q ghostty; then
+    return
+  fi
+  run osascript -e 'on run argv' \
+    -e 'tell application "Ghostty" to new window with configuration {command:item 1 of argv}' \
+    -e 'end run' "$TMUX_BIN -u new-session -A -s $1" ||
+    run open -na Ghostty.app --args --window-save-state=never --title="$1" -e "$TMUX_BIN" -u new-session -A -s "$1"
+}
+
+# wid NAME: AeroSpace id of the Ghostty window titled "NAME" or "NAME · <window>"
+wid() {
+  if [ $dry = 1 ]; then echo "<$1>"; return; fi
+  aerospace list-windows --all --format '%{window-id}|%{app-bundle-id}|%{window-title}' 2>/dev/null |
+    awk -F'|' -v s="$1" -v app=$GHOSTTY_ID '$2 == app && ($3 == s || index($3, s " · ") == 1) { print $1; exit }'
+}
+
+# columns WORKSPACE NAME...: move the windows there as flat tiles, left to right in the given order
+columns() {
+  ws=$1; shift
+  for s; do
+    n=0
+    while [ -z "$(wid "$s")" ]; do
+      n=$((n + 1)); [ $n -gt 50 ] && { echo "${0##*/}: no window for $s (is AeroSpace running?)" >&2; return 1; }
+      sleep 0.2
+    done
+  done
+  for s; do run aerospace move-node-to-workspace --window-id "$(wid "$s")" "$ws"; done
+  run aerospace flatten-workspace-tree --workspace "$ws"
+  run aerospace layout --window-id "$(wid "$1")" h_tiles
+  # Push each window to the right edge in turn; any other windows end up on the left
+  for s; do
+    if [ $dry = 1 ]; then run aerospace move --window-id "$(wid "$s")" --boundaries-action fail right; continue; fi
+    n=0
+    while [ $n -lt 9 ] && aerospace move --window-id "$(wid "$s")" --boundaries-action fail right >/dev/null 2>&1; do
+      n=$((n + 1))
+    done
+  done
+}
+
+case ${0##*/} in
+  build)
+    dir=${dir:-$PWD}
+    [ "$dir" = / ] && dir=$HOME # AeroSpace runs scripts from /
+    dir=$(cd "$dir" && pwd) || exit 1
+    session code "$dir" nvim
+    session agent "$dir" claude
+    session bench "$dir"
+    # Placeholder left on the prompt, not run
+    [ $created = 1 ] && run tmux send-keys -t =bench: 'watchexec -c -- '
+    ghostty_start
+    for s in code agent bench; do window $s; done
+    columns 2 code agent bench || exit 1
+    run aerospace join-with --window-id "$(wid agent)" right
+    run aerospace resize --window-id "$(wid agent)" width 520
+    run aerospace workspace 2
+    run aerospace focus --window-id "$(wid code)"
+    ;;
+  *)
+    vault=$HOME/projects/study-vault
+    session vault "$vault" 'yazi .'
+    if [ $created = 1 ] || [ "$(tmux display -p -t =vault: '#{window_panes}')" = 1 ]; then
+      run tmux split-window -d -v -l 30% -t =vault: -c "$vault"
+      run tmux send-keys -t '=vault:.{bottom}' 'vault-due --watch' Enter
+    elif idle '=vault:.{bottom}'; then
+      run tmux send-keys -t '=vault:.{bottom}' 'vault-due --watch' Enter
+    fi
+    # The split is made at the detached 80x24 size; keep due at 30% whenever the window resizes
+    run tmux set-hook -t =vault: window-resized 'resize-pane -t "=vault:.{bottom}" -y 30%'
+    session notes "$vault" nvim
+    session cava "$vault" cava
+    session ask "$vault" claude
+    ghostty_start
+    for s in vault notes cava ask; do window $s; done
+    columns 1 vault notes cava ask || exit 1
+    run aerospace join-with --window-id "$(wid cava)" right
+    # resize spreads the change over every sibling, so alternate until both side columns settle
+    for i in 1 2 3 4; do
+      run aerospace resize --window-id "$(wid vault)" width 340
+      run aerospace resize --window-id "$(wid cava)" width 400
+    done
+    run aerospace resize --window-id "$(wid cava)" height 270
+    run aerospace workspace 1
+    run aerospace focus --window-id "$(wid notes)"
+    ;;
+esac

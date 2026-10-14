@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>A · Monolith</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&amp;family=STIX+Two+Text:ital,wght@0,400;1,400&amp;display=swap">
+<style>
+body{margin:0}
+*{transition: background-color 900ms ease, color 900ms ease, border-color 900ms ease}
+</style>
+</helmet>
+<div style="width: 1470px; height: 956px; position: relative; overflow: hidden; background-color: #0b0d10; font-family: 'Fira Code', ui-monospace, monospace; font-size: 13px; line-height: 20px; color: {{t.fg}}">
+
+  <img src="/_blob/bf81c3b4a7b0fcd70ecc7d2e293f345a" alt="" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; z-index: {{w0.z}}; clip-path: {{w0.clip}}; transition: {{wtr}}">
+  <img src="/_blob/c956e114807bb5fa5cbe59dce1f58f86" alt="" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; z-index: {{w1.z}}; clip-path: {{w1.clip}}; transition: {{wtr}}">
+  <img src="/_blob/bdf5a524ef111806c5f9d04de2307c82" alt="" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; z-index: {{w2.z}}; clip-path: {{w2.clip}}; transition: {{wtr}}">
+  <img src="/_blob/c64667a044b2846e44e8e8488dff0b01" alt="" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; z-index: {{w3.z}}; clip-path: {{w3.clip}}; transition: {{wtr}}">
+  <img src="/_blob/8d583abe2a1fb4f3028c9c3f44c1b642" alt="" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; z-index: {{w4.z}}; clip-path: {{w4.clip}}; transition: {{wtr}}">
+  <img src="/_blob/a5f2f8467cb1e2586e99a6f1440e6fff" alt="" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; z-index: {{w5.z}}; clip-path: {{w5.clip}}; transition: {{wtr}}">
+
+  <div style="position: absolute; left: 10px; right: 10px; top: 8px; height: 26px; z-index: 10; display: flex; align-items: center; justify-content: space-between; font-size: 11px; letter-spacing: 0.06em">
+    <div style="height: 26px; display: flex; align-items: center; gap: 18px; padding: 0 12px; border-radius: 6px; background-color: {{t.pill}}; border: 1px solid {{t.line}}; color: {{t.fg}}">
+      <span>CPU 31%</span><span>GPU 49%</span><span>RAM 19%</span><span>43°C</span>
+    </div>
+    <div style="height: 26px; display: flex; align-items: center; padding: 0 14px; border-radius: 6px; background-color: {{t.pill}}; border: 1px solid {{t.line}}; color: {{t.fg}}">Wed 14 Oct   21:37</div>
+    <div style="height: 26px; display: flex; align-items: center; gap: 14px; padding: 0 6px 0 12px; border-radius: 6px; background-color: {{t.pill}}; border: 1px solid {{t.line}}; color: {{t.fg}}">
+      <span>◷ 31:08 deep</span>
+      <span>vol 36%</span>
+      <button onClick="{{toggle}}" style="height: 20px; padding: 0 8px; border-radius: 4px; border: 1px solid {{t.lineHi}}; background-color: transparent; color: {{t.hi}}; font-family: inherit; font-size: 11px; letter-spacing: 0.06em; cursor: pointer">⌥W wall</button>
+    </div>
+  </div>
+
+  <div style="position: absolute; left: 10px; right: 10px; top: 44px; bottom: 10px; z-index: 5; display: flex; gap: 10px">
+
+    <div style="width: 340px; flex: none; position: relative; display: flex; flex-direction: column; border-radius: 6px; border: 1px solid {{t.line}}; background-color: {{t.panel}}; backdrop-filter: blur(16px)">
+      <span style="position: absolute; left: 12px; top: -9px; padding: 0 6px; font-size: 11px; line-height: 16px; color: {{t.sub}}; background-color: {{t.solid}}; border-radius: 3px">vault</span>
+      <div style="padding: 18px 16px 0; white-space: pre; font-size: 12.5px">
+        <div style="color: {{t.sub}}">▾ math</div>
+        <div style="color: {{t.sub}}">  ▾ linear-algebra</div>
+        <div style="color: {{t.dim}}">      01-vectors.md</div>
+        <div style="color: {{t.dim}}">      02-matrices.md</div>
+        <div style="color: {{t.dim}}">      03-eigen.md</div>
+        <div style="color: {{t.hi}}; background-color: {{t.sel}}; font-weight: 700">    ▸ 05-spectral.md</div>
+        <div style="color: {{t.sub}}">  ▸ probability</div>
+        <div style="color: {{t.sub}}">  ▸ signals</div>
+        <div style="color: {{t.sub}}">▾ fpga</div>
+        <div style="color: {{t.dim}}">    03-cdc.md</div>
+        <div style="color: {{t.sub}}">▸ daily</div>
+      </div>
+      <div style="height: 1px; margin: 18px 16px 14px; background-color: {{t.line}}"></div>
+      <div style="padding: 0 16px; font-size: 11px; letter-spacing: 0.06em; color: {{t.dim}}">REVIEW QUEUE</div>
+      <div style="padding: 8px 16px 0; font-size: 12.5px; display: flex; flex-direction: column">
+        <div style="display: flex; justify-content: space-between"><span style="color: {{t.fg}}">spectral theorem</span><span style="color: {{t.hi}}">today</span></div>
+        <div style="display: flex; justify-content: space-between"><span style="color: {{t.fg}}">clock domain crossing</span><span style="color: {{t.hi}}">today</span></div>
+        <div style="display: flex; justify-content: space-between"><span style="color: {{t.sub}}">gray-code pointers</span><span style="color: {{t.dim}}">Fri</span></div>
+        <div style="display: flex; justify-content: space-between"><span style="color: {{t.sub}}">conjugate priors</span><span style="color: {{t.dim}}">Sat</span></div>
+      </div>
+      <div style="flex: 1"></div>
+      <div style="padding: 0 16px 14px; font-size: 11px; color: {{t.dim}}">wallpaper · {{curName}} · palette synced</div>
+    </div>
+
+    <div style="flex: 1; min-width: 0; position: relative; display: flex; flex-direction: column; border-radius: 6px; border: 1px solid {{t.lineHi}}; background-color: {{t.panel}}; backdrop-filter: blur(16px)">
+      <span style="position: absolute; left: 12px; top: -9px; padding: 0 6px; font-size: 11px; line-height: 16px; color: {{t.hi}}; background-color: {{t.solid}}; border-radius: 3px">nvim · 05-spectral.md</span>
+      <div style="flex: 1; min-height: 0; padding: 26px 34px 0; display: flex; flex-direction: column">
+        <div style="font-weight: 700; font-size: 15px; line-height: 24px; color: {{t.hi}}">◆ Spectral theorem</div>
+        <div style="color: {{t.dim}}; font-style: italic">tags: linear-algebra · quant · review today</div>
+        <div style="height: 18px"></div>
+        <div style="color: {{t.fg}}">A real symmetric matrix diagonalizes in an orthonormal basis:</div>
+        <div style="height: 60px; display: flex; align-items: center; justify-content: center; font-family: 'STIX Two Text', serif; font-size: 24px; color: {{t.hi}}">
+          <span><i>A</i> = <i>Q</i>Λ<i>Q</i><sup style="font-size: 14px">⊤</sup>,     <i>Q</i><sup style="font-size: 14px">⊤</sup><i>Q</i> = <i>I</i></span>
+        </div>
+        <div style="white-space: pre; color: {{t.fg}}"><span style="color: {{t.sub}}">  • </span>eigenvalues are real; eigenvectors for distinct λ are orthogonal</div>
+        <div style="white-space: pre; color: {{t.fg}}"><span style="color: {{t.sub}}">  • </span>the Rayleigh quotient is bounded by the top eigenvalue:</div>
+        <div style="height: 70px; display: flex; align-items: center; justify-content: center; font-family: 'STIX Two Text', serif; font-size: 24px; color: {{t.hi}}">
+          <span style="display: inline-flex; align-items: center; gap: 10px">
+            <span style="display: inline-flex; flex-direction: column; align-items: center; line-height: 1">
+              <span>max</span>
+              <span style="font-size: 13px; margin-top: 4px">‖<i>x</i>‖=1</span>
+            </span>
+            <span><i>x</i><sup style="font-size: 14px">⊤</sup><i>Ax</i> = <i>λ</i><sub style="font-size: 13px">max</sub></span>
+          </span>
+        </div>
+        <div style="height: 12px"></div>
+        <div style="font-weight: 700; color: {{t.hi}}">◇ Why it matters for portfolios</div>
+        <div style="height: 10px"></div>
+        <div style="white-space: pre; margin: 0 -8px; padding: 0 8px; background-color: {{t.sel}}"><span style="background-color: {{t.hi}}; color: {{t.solid}}">$</span><span style="color: {{t.dim}}">$</span><span style="color: {{t.hi}}">\operatorname</span><span style="color: {{t.sub}}">{Var}</span>(w^<span style="color: {{t.hi}}">\top</span> X) = w^<span style="color: {{t.hi}}">\top</span> <span style="color: {{t.hi}}">\Sigma</span> w<span style="color: {{t.dim}}">$$</span></div>
+        <div style="align-self: flex-start; margin: 6px 0 0 24px; padding: 8px 16px; border: 1px solid {{t.line}}; border-radius: 4px; background-color: {{t.solid}}; font-family: 'STIX Two Text', serif; font-size: 20px; line-height: 26px; color: {{t.hi}}">Var(<i>w</i><sup style="font-size: 12px">⊤</sup><i>X</i>) = <i>w</i><sup style="font-size: 12px">⊤</sup>Σ<i>w</i></div>
+        <div style="height: 10px"></div>
+        <div style="white-space: pre; color: {{t.fg}}"><span style="color: {{t.sub}}">  • </span>Σ is symmetric PSD, so the riskiest unit w is its top eigenvector.</div>
+        <div style="white-space: pre; color: {{t.fg}}"><span style="color: {{t.sub}}">  • </span>PCA on returns is this decomposition, sorted by λ.</div>
+      </div>
+      <div style="height: 24px; flex: none; display: flex; align-items: center; justify-content: space-between; padding: 0 12px 0 0; border-top: 1px solid {{t.line}}; font-size: 11px">
+        <div style="display: flex; align-items: center; gap: 12px">
+          <span style="padding: 0 10px; height: 24px; line-height: 24px; background-color: {{t.hi}}; color: {{t.solid}}; font-weight: 700; border-radius: 0 0 0 5px">NORMAL</span>
+          <span style="color: {{t.sub}}">05-spectral.md</span>
+        </div>
+        <span style="color: {{t.dim}}">markdown · 14:1 · 62%</span>
+      </div>
+    </div>
+
+    <div style="width: 400px; flex: none; display: flex; flex-direction: column; gap: 10px">
+      <div style="height: 270px; flex: none; position: relative; display: flex; align-items: flex-end; justify-content: center; gap: 3px; padding: 0 16px 18px; border-radius: 6px; border: 1px solid {{t.line}}; background-color: {{t.panel}}; backdrop-filter: blur(16px)">
+        <span style="position: absolute; left: 12px; top: -9px; padding: 0 6px; font-size: 11px; line-height: 16px; color: {{t.sub}}; background-color: {{t.solid}}; border-radius: 3px">cava</span>
+        <sc-for list="{{bars}}" as="b" hint-placeholder-count="40">
+          <span style="width: 6px; height: {{b.h}}; background-color: {{t.fg}}; opacity: {{b.o}}"></span>
+        </sc-for>
+      </div>
+      <div style="flex: 1; min-height: 0; position: relative; display: flex; flex-direction: column; padding: 20px 16px 12px; border-radius: 6px; border: 1px solid {{t.line}}; background-color: {{t.panel}}; backdrop-filter: blur(16px); font-size: 12px; line-height: 19px">
+        <span style="position: absolute; left: 12px; top: -9px; padding: 0 6px; font-size: 11px; line-height: 16px; color: {{t.sub}}; background-color: {{t.solid}}; border-radius: 3px">claude · ask</span>
+        <div style="white-space: pre; color: {{t.sub}}">&gt; derive the Rayleigh bound from the
+  spectral theorem</div>
+        <div style="height: 14px"></div>
+        <div style="white-space: pre; color: {{t.fg}}"><span style="color: {{t.hi}}">⏺</span> Write x = Qy. Q is orthogonal, so
+  ‖y‖ = ‖x‖ = 1 and
+
+  xᵀAx = yᵀΛy = Σ λᵢyᵢ² ≤ λ_max Σ yᵢ² = λ_max.
+
+  Equality holds at y = e₁, i.e. x is the
+  top eigenvector.</div>
+        <div style="flex: 1"></div>
+        <div style="height: 32px; box-sizing: border-box; border: 1px solid {{t.line}}; border-radius: 4px; display: flex; align-items: center; padding: 0 10px; gap: 8px">
+          <span style="color: {{t.sub}}">&gt;</span>
+          <span style="width: 7px; height: 16px; background-color: {{t.fg}}"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <sc-if value="{{open}}" hint-placeholder-val="{{ true }}">
+    <div style="position: absolute; left: 0; right: 0; top: 300px; height: 380px; z-index: 20; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px">
+      <div style="display: flex; align-items: center; justify-content: center; gap: 12px; height: 310px">
+        <button aria-label="fog peaks" onClick="{{c0.pick}}" style="order: {{c0.order}}; width: {{c0.w}}; height: {{c0.h}}; opacity: {{c0.o}}; padding: 0; overflow: hidden; border: 2px solid {{c0.b}}; background-color: #000; transform: skewX(-8deg); cursor: pointer; box-shadow: 0 14px 30px rgba(0,0,0,0.45); transition: width 450ms ease, height 450ms ease, opacity 450ms ease, border-color 450ms ease"><img src="/_blob/bf81c3b4a7b0fcd70ecc7d2e293f345a" alt="" style="width: 130%; height: 100%; margin-left: -15%; object-fit: cover; transform: skewX(8deg); display: block"></button>
+        <button aria-label="ember dunes" onClick="{{c1.pick}}" style="order: {{c1.order}}; width: {{c1.w}}; height: {{c1.h}}; opacity: {{c1.o}}; padding: 0; overflow: hidden; border: 2px solid {{c1.b}}; background-color: #000; transform: skewX(-8deg); cursor: pointer; box-shadow: 0 14px 30px rgba(0,0,0,0.45); transition: width 450ms ease, height 450ms ease, opacity 450ms ease, border-color 450ms ease"><img src="/_blob/c956e114807bb5fa5cbe59dce1f58f86" alt="" style="width: 130%; height: 100%; margin-left: -15%; object-fit: cover; transform: skewX(8deg); display: block"></button>
+        <button aria-label="pine valley" onClick="{{c2.pick}}" style="order: {{c2.order}}; width: {{c2.w}}; height: {{c2.h}}; opacity: {{c2.o}}; padding: 0; overflow: hidden; border: 2px solid {{c2.b}}; background-color: #000; transform: skewX(-8deg); cursor: pointer; box-shadow: 0 14px 30px rgba(0,0,0,0.45); transition: width 450ms ease, height 450ms ease, opacity 450ms ease, border-color 450ms ease"><img src="/_blob/bdf5a524ef111806c5f9d04de2307c82" alt="" style="width: 130%; height: 100%; margin-left: -15%; object-fit: cover; transform: skewX(8deg); display: block"></button>
+        <button aria-label="neon district" onClick="{{c3.pick}}" style="order: {{c3.order}}; width: {{c3.w}}; height: {{c3.h}}; opacity: {{c3.o}}; padding: 0; overflow: hidden; border: 2px solid {{c3.b}}; background-color: #000; transform: skewX(-8deg); cursor: pointer; box-shadow: 0 14px 30px rgba(0,0,0,0.45); transition: width 450ms ease, height 450ms ease, opacity 450ms ease, border-color 450ms ease"><img src="/_blob/c64667a044b2846e44e8e8488dff0b01" alt="" style="width: 130%; height: 100%; margin-left: -15%; object-fit: cover; transform: skewX(8deg); display: block"></button>
+        <button aria-label="lone tree" onClick="{{c4.pick}}" style="order: {{c4.order}}; width: {{c4.w}}; height: {{c4.h}}; opacity: {{c4.o}}; padding: 0; overflow: hidden; border: 2px solid {{c4.b}}; background-color: #000; transform: skewX(-8deg); cursor: pointer; box-shadow: 0 14px 30px rgba(0,0,0,0.45); transition: width 450ms ease, height 450ms ease, opacity 450ms ease, border-color 450ms ease"><img src="/_blob/8d583abe2a1fb4f3028c9c3f44c1b642" alt="" style="width: 130%; height: 100%; margin-left: -15%; object-fit: cover; transform: skewX(8deg); display: block"></button>
+        <button aria-label="aurora" onClick="{{c5.pick}}" style="order: {{c5.order}}; width: {{c5.w}}; height: {{c5.h}}; opacity: {{c5.o}}; padding: 0; overflow: hidden; border: 2px solid {{c5.b}}; background-color: #000; transform: skewX(-8deg); cursor: pointer; box-shadow: 0 14px 30px rgba(0,0,0,0.45); transition: width 450ms ease, height 450ms ease, opacity 450ms ease, border-color 450ms ease"><img src="/_blob/a5f2f8467cb1e2586e99a6f1440e6fff" alt="" style="width: 130%; height: 100%; margin-left: -15%; object-fit: cover; transform: skewX(8deg); display: block"></button>
+      </div>
+      <div style="display: flex; align-items: center; gap: 16px; height: 28px; padding: 0 6px 0 14px; border-radius: 6px; border: 1px solid {{t.line}}; background-color: {{t.pill}}; font-size: 11px; letter-spacing: 0.06em">
+        <span style="color: {{t.hi}}">{{curName}}</span>
+        <span style="color: {{t.sub}}">h l move · ↵ apply</span>
+        <button onClick="{{toggle}}" style="height: 20px; padding: 0 8px; border-radius: 4px; border: 1px solid {{t.line}}; background-color: transparent; color: {{t.fg}}; font-family: inherit; font-size: 11px; cursor: pointer">esc</button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1470,"height":956}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const W = [
+      { name: 'fog peaks', h: 205 },
+      { name: 'ember dunes', h: 14 },
+      { name: 'pine valley', h: 160 },
+      { name: 'neon district', h: 285 },
+      { name: 'lone tree', h: 205 },
+      { name: 'aurora', h: 170 }
+    ];
+    const s = this.state || {};
+    const cur = s.cur ?? 0;
+    const prev = s.prev ?? -1;
+    const open = s.open ?? true;
+    const h = W[cur].h;
+    const t = {
+      panel: 'hsl(' + h + ' 14% 8% / 0.70)',
+      solid: 'hsl(' + h + ' 14% 9%)',
+      pill: 'hsl(' + h + ' 14% 8% / 0.62)',
+      line: 'hsl(' + h + ' 12% 72% / 0.28)',
+      lineHi: 'hsl(' + h + ' 14% 90% / 0.7)',
+      fg: 'hsl(' + h + ' 12% 86%)',
+      sub: 'hsl(' + h + ' 9% 70%)',
+      dim: 'hsl(' + h + ' 8% 54%)',
+      hi: 'hsl(' + h + ' 16% 94%)',
+      sel: 'hsl(' + h + ' 12% 32% / 0.55)'
+    };
+    const kind = s.kind ?? 'wipe';
+    const ox = s.ox ?? 50;
+    const oy = s.oy ?? 48.6;
+    const HIDE = kind === 'grow' ? 'circle(0% at ' + ox + '% ' + oy + '%)' : 'polygon(-30% 0, -5% 0, -25% 100%, -30% 100%)';
+    const SHOW = kind === 'grow' ? 'circle(160% at ' + ox + '% ' + oy + '%)' : 'polygon(-30% 0, 130% 0, 110% 100%, -30% 100%)';
+    const wtr = kind === 'grow' ? 'clip-path 1100ms cubic-bezier(.65,0,.35,1)' : 'clip-path 900ms cubic-bezier(.7,0,.2,1)';
+    const layer = (i) => ({ z: i === cur ? 2 : i === prev ? 1 : 0, clip: i === cur || i === prev ? SHOW : HIDE });
+    const SIZES = [[210, 300], [160, 240], [124, 190], [100, 150]];
+    const DIST = [2, 1, 0, 1, 2, 3];
+    const card = (i) => {
+      const pos = (i - cur + 2 + 6) % 6;
+      const d = Math.abs(pos - 2);
+      return {
+        order: pos,
+        w: SIZES[d][0] + 'px',
+        h: SIZES[d][1] + 'px',
+        o: [1, 0.95, 0.85, 0.7][d],
+        b: i === cur ? t.hi : 'transparent',
+        pick: () => {
+          if (i === cur) return;
+          let x = (1470 - 878) / 2;
+          for (let k = 0; k < pos; k++) x += SIZES[DIST[k]][0] + 12;
+          x += SIZES[DIST[pos]][0] / 2;
+          const next = Math.random() < 0.5 ? 'wipe' : 'grow';
+          this.setState({ kind: next, ox: (x / 1470 * 100).toFixed(1), oy: 48.6 });
+          setTimeout(() => this.setState({ prev: cur, cur: i }), 40);
+        }
+      };
+    };
+    const bars = [];
+    for (let k = 0; k < 40; k++) {
+      const v = 0.5 + 0.5 * Math.sin(k * 0.55) * Math.cos(k * 0.21 + 1.3);
+      const tall = Math.max(14, Math.round(24 + 190 * v * (0.55 + 0.45 * Math.abs(Math.sin(k * 1.7)))));
+      bars.push({ h: tall + 'px', o: (0.45 + 0.5 * v).toFixed(2) });
+    }
+    return {
+      t: t,
+      curName: W[cur].name,
+      open: open,
+      toggle: () => this.setState({ open: !open }),
+      wtr: wtr,
+      w0: layer(0), w1: layer(1), w2: layer(2), w3: layer(3), w4: layer(4), w5: layer(5),
+      c0: card(0), c1: card(1), c2: card(2), c3: card(3), c4: card(4), c5: card(5),
+      bars: bars
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+## cava for the Monolith study layout (top-right panel).
+## Colours come from the wallsync theme: ~/.config/cava/themes/wallsync is a
+## symlink to ~/.cache/wallsync/out/cava.theme. cava resolves `theme` only
+## under $XDG_CONFIG_HOME/cava/themes (or ~/.config/cava/themes) and exits if
+## the file is missing. SIGUSR2 re-reads the theme.
+
+[general]
+framerate = 60
+autosens = 1
+bars = 0
+bar_width = 1
+bar_spacing = 1
+sleep_timer = 3
+
+[input]
+# System output through the macOS 14.2+ CoreAudio tap (System Audio Recording permission).
+method = coreaudio
+source = tap
+
+[output]
+method = noncurses
+
+[color]
+theme = 'wallsync'

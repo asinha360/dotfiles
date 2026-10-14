@@ -1,0 +1,88 @@
+# Monolith: ANSI colour names only, so yazi follows the wallsync palette.
+# white = hi, gray = fg, darkgray = dim (ANSI 15 / 7 / 8)
+
+[mgr]
+cwd = { fg = "darkgray" }
+border_style = { fg = "darkgray" }
+find_keyword = { fg = "white", bold = true, underline = true }
+find_position = { fg = "gray", italic = true }
+count_copied = { fg = "black", bg = "gray" }
+count_cut = { fg = "black", bg = "red" }
+count_selected = { fg = "black", bg = "white" }
+
+[tabs]
+active = { fg = "black", bg = "gray", bold = true }
+inactive = { fg = "gray", bg = "black" }
+
+[mode]
+normal_main = { fg = "black", bg = "gray", bold = true }
+normal_alt = { fg = "gray", bg = "black" }
+select_main = { fg = "black", bg = "white", bold = true }
+select_alt = { fg = "white", bg = "black" }
+unset_main = { fg = "black", bg = "red", bold = true }
+unset_alt = { fg = "red", bg = "black" }
+
+[status]
+perm_sep = { fg = "darkgray" }
+perm_type = { fg = "gray" }
+perm_read = { fg = "gray" }
+perm_write = { fg = "gray" }
+perm_exec = { fg = "gray" }
+progress_normal = { fg = "gray", bg = "black" }
+
+[which]
+border = { fg = "darkgray" }
+cand = { fg = "white" }
+rest = { fg = "darkgray" }
+desc = { fg = "gray" }
+separator_style = { fg = "darkgray" }
+
+[confirm]
+border = { fg = "darkgray" }
+title = { fg = "gray" }
+
+[spot]
+border = { fg = "darkgray" }
+title = { fg = "gray" }
+tbl_col = { fg = "gray" }
+tbl_cell = { fg = "white", reversed = true }
+
+[pick]
+border = { fg = "darkgray" }
+active = { fg = "white", bold = true }
+
+[input]
+border = { fg = "darkgray" }
+
+[cmp]
+border = { fg = "darkgray" }
+
+[tasks]
+border = { fg = "darkgray" }
+hovered = { fg = "white", bold = true }
+
+[help]
+border = { fg = "darkgray" }
+chord = { fg = "white" }
+
+[filetype]
+rules = [
+  { mime = "vfs/{absent,stale}", fg = "darkgray" },
+  { url = "*", is = "orphan", fg = "red" },
+  { url = "*", is = "dummy", fg = "red" },
+  { url = "*/", is = "dummy", fg = "red" },
+  { url = "*", is = "exec", fg = "white" },
+  { url = "*/", fg = "white", bold = true },
+]
+
+# Plain icons without the preset's fixed hex colours
+[icon]
+globs = []
+dirs = []
+files = []
+exts = []
+conds = [
+  { if = "dir", text = "" },
+  { if = "exec", text = "" },
+  { if = "!dir", text = "" },
+]

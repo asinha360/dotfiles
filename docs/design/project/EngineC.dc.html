@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>C · Glass</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;600&amp;family=STIX+Two+Text:ital,wght@0,400;1,400&amp;display=swap">
+<style>
+body{margin:0}
+*{transition: background-color 1000ms ease, color 1000ms ease, border-color 1000ms ease}
+</style>
+</helmet>
+<div style="width: 1470px; height: 956px; position: relative; overflow: hidden; background-color: #0b0d10; font-family: 'Geist Mono', ui-monospace, monospace; font-size: 13px; line-height: 20px; color: {{t.fg}}">
+
+  <img src="/_blob/bf81c3b4a7b0fcd70ecc7d2e293f345a" alt="" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; z-index: {{w0.z}}; opacity: {{w0.o}}; transform: {{w0.tf}}; filter: {{w0.f}}; transition: opacity 1000ms ease, transform 1400ms cubic-bezier(.2,.8,.2,1), filter 1000ms ease">
+  <img src="/_blob/c956e114807bb5fa5cbe59dce1f58f86" alt="" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; z-index: {{w1.z}}; opacity: {{w1.o}}; transform: {{w1.tf}}; filter: {{w1.f}}; transition: opacity 1000ms ease, transform 1400ms cubic-bezier(.2,.8,.2,1), filter 1000ms ease">
+  <img src="/_blob/bdf5a524ef111806c5f9d04de2307c82" alt="" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; z-index: {{w2.z}}; opacity: {{w2.o}}; transform: {{w2.tf}}; filter: {{w2.f}}; transition: opacity 1000ms ease, transform 1400ms cubic-bezier(.2,.8,.2,1), filter 1000ms ease">
+  <img src="/_blob/c64667a044b2846e44e8e8488dff0b01" alt="" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; z-index: {{w3.z}}; opacity: {{w3.o}}; transform: {{w3.tf}}; filter: {{w3.f}}; transition: opacity 1000ms ease, transform 1400ms cubic-bezier(.2,.8,.2,1), filter 1000ms ease">
+  <img src="/_blob/8d583abe2a1fb4f3028c9c3f44c1b642" alt="" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; z-index: {{w4.z}}; opacity: {{w4.o}}; transform: {{w4.tf}}; filter: {{w4.f}}; transition: opacity 1000ms ease, transform 1400ms cubic-bezier(.2,.8,.2,1), filter 1000ms ease">
+  <img src="/_blob/a5f2f8467cb1e2586e99a6f1440e6fff" alt="" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; z-index: {{w5.z}}; opacity: {{w5.o}}; transform: {{w5.tf}}; filter: {{w5.f}}; transition: opacity 1000ms ease, transform 1400ms cubic-bezier(.2,.8,.2,1), filter 1000ms ease">
+
+  <div style="position: absolute; left: 50%; top: 10px; transform: translateX(-50%); height: 36px; z-index: 10; box-sizing: border-box; display: flex; align-items: center; gap: 18px; padding: 0 6px 0 18px; border-radius: 999px; background-color: {{t.glass}}; border: 1px solid {{t.rim}}; backdrop-filter: blur(24px) saturate(160%); box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), 0 10px 30px rgba(0,0,0,0.25); font-size: 12px; white-space: nowrap">
+    <span style="color: {{t.accent}}">● study</span>
+    <span style="color: {{t.sub}}">Wed 14 Oct  21:37</span>
+    <span style="color: {{t.fg}}">◷ 31:08</span>
+    <button onClick="{{toggle}}" style="height: 26px; padding: 0 12px; border-radius: 999px; border: 1px solid {{t.rim}}; background-color: {{t.glassHi}}; color: {{t.fg}}; font-family: inherit; font-size: 12px; cursor: pointer">⌥W</button>
+  </div>
+
+  <div style="position: absolute; left: 36px; top: 62px; width: 880px; height: 858px; z-index: 5; box-sizing: border-box; display: flex; flex-direction: column; border-radius: 24px; background-color: {{t.glass}}; border: 1px solid {{t.rim}}; backdrop-filter: blur(30px) saturate(160%); box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 30px 70px rgba(0,0,0,0.35); overflow: hidden">
+    <div style="flex: 1; min-height: 0; padding: 40px 52px 0; display: flex; flex-direction: column">
+      <div style="font-weight: 600; font-size: 17px; line-height: 26px; color: {{t.fg}}"><span style="color: {{t.accent}}">#</span> Spectral theorem</div>
+      <div style="color: {{t.sub}}">linear-algebra · quant · review today</div>
+      <div style="height: 20px"></div>
+      <div>A real symmetric matrix diagonalizes in an orthonormal basis:</div>
+      <div style="height: 66px; display: flex; align-items: center; justify-content: center; font-family: 'STIX Two Text', serif; font-size: 26px; color: {{t.fg}}">
+        <span><i>A</i> = <i>Q</i>Λ<i>Q</i><sup style="font-size: 15px">⊤</sup>,  <i>Q</i><sup style="font-size: 15px">⊤</sup><i>Q</i> = <i>I</i></span>
+      </div>
+      <div style="white-space: pre"><span style="color: {{t.accent}}">  ● </span>eigenvalues are real; eigenvectors for distinct λ are orthogonal</div>
+      <div style="white-space: pre"><span style="color: {{t.accent}}">  ● </span>the Rayleigh quotient is bounded by the top eigenvalue:</div>
+      <div style="height: 76px; display: flex; align-items: center; justify-content: center; font-family: 'STIX Two Text', serif; font-size: 26px; color: {{t.fg}}">
+        <span style="display: inline-flex; align-items: center; gap: 10px">
+          <span style="display: inline-flex; flex-direction: column; align-items: center; line-height: 1">
+            <span>max</span>
+            <span style="font-size: 14px; margin-top: 4px">‖<i>x</i>‖=1</span>
+          </span>
+          <span><i>x</i><sup style="font-size: 15px">⊤</sup><i>Ax</i> = <i>λ</i><sub style="font-size: 14px">max</sub></span>
+        </span>
+      </div>
+      <div style="height: 10px"></div>
+      <div style="font-weight: 600; color: {{t.fg}}"><span style="color: {{t.accent}}">##</span> Why it matters for portfolios</div>
+      <div style="height: 12px"></div>
+      <div style="white-space: pre; margin: 0 -12px; padding: 3px 12px; border-radius: 10px; background-color: {{t.glassHi}}"><span style="background-color: {{t.fg}}; color: #111">$</span><span style="color: {{t.sub}}">$</span><span style="color: {{t.accent}}">\operatorname</span><span style="color: {{t.sub}}">{Var}</span>(w^<span style="color: {{t.accent}}">\top</span> X) = w^<span style="color: {{t.accent}}">\top</span> <span style="color: {{t.accent}}">\Sigma</span> w<span style="color: {{t.sub}}">$$</span></div>
+      <div style="align-self: flex-start; margin: 10px 0 0 24px; padding: 10px 18px; border-radius: 14px; border: 1px solid {{t.rim}}; background-color: {{t.glassHi}}; font-family: 'STIX Two Text', serif; font-size: 21px; line-height: 26px; color: {{t.fg}}">Var(<i>w</i><sup style="font-size: 13px">⊤</sup><i>X</i>) = <i>w</i><sup style="font-size: 13px">⊤</sup>Σ<i>w</i></div>
+      <div style="height: 12px"></div>
+      <div style="white-space: pre"><span style="color: {{t.accent}}">  ● </span>Σ is symmetric PSD, so the riskiest unit w is its top eigenvector.</div>
+      <div style="white-space: pre"><span style="color: {{t.accent}}">  ● </span>PCA on returns is this decomposition, sorted by λ.</div>
+    </div>
+    <div style="height: 32px; flex: none; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; border-top: 1px solid {{t.rim}}; font-size: 12px; color: {{t.sub}}">
+      <span><span style="color: {{t.accent}}">NORMAL</span>  05-spectral.md</span>
+      <span>markdown · 14:1</span>
+    </div>
+  </div>
+
+  <div style="position: absolute; left: 936px; top: 62px; width: 498px; height: 300px; z-index: 5; box-sizing: border-box; padding: 26px 30px; display: flex; align-items: center; gap: 30px; border-radius: 24px; background-color: {{t.glass}}; border: 1px solid {{t.rim}}; backdrop-filter: blur(30px) saturate(160%); box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 30px 70px rgba(0,0,0,0.35)">
+    <div style="width: 170px; height: 170px; flex: none; position: relative">
+      <svg width="170" height="170" viewBox="0 0 170 170" aria-hidden="true">
+        <circle cx="85" cy="85" r="70" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="10"></circle>
+        <circle cx="85" cy="85" r="70" fill="none" stroke-width="10" stroke-linecap="round" stroke-dasharray="274 166" transform="rotate(-90 85 85)" style="stroke: {{t.accent}}; transition: stroke 1000ms ease"></circle>
+      </svg>
+      <div style="position: absolute; left: 0; top: 0; width: 170px; height: 170px; display: flex; flex-direction: column; align-items: center; justify-content: center">
+        <span style="font-size: 30px; line-height: 36px; font-weight: 600; color: {{t.fg}}">31:08</span>
+        <span style="font-size: 12px; color: {{t.sub}}">of 50:00</span>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <span style="font-size: 12px; color: {{t.sub}}">deep work</span>
+      <span style="font-size: 16px; line-height: 22px; font-weight: 600; color: {{t.fg}}">block 2 of 3</span>
+      <span style="color: {{t.sub}}">spectral theorem</span>
+      <span style="color: {{t.sub}}">then: quiz, 10 min</span>
+    </div>
+  </div>
+
+  <div style="position: absolute; left: 936px; top: 382px; width: 498px; height: 538px; z-index: 5; box-sizing: border-box; padding: 24px 26px; display: flex; flex-direction: column; border-radius: 24px; background-color: {{t.glass}}; border: 1px solid {{t.rim}}; backdrop-filter: blur(30px) saturate(160%); box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 30px 70px rgba(0,0,0,0.35); font-size: 12.5px; line-height: 20px">
+    <span style="font-size: 12px; color: {{t.sub}}">claude · ask</span>
+    <div style="height: 12px"></div>
+    <div style="white-space: pre; color: {{t.sub}}">&gt; quiz me on today's note, no answers yet</div>
+    <div style="height: 14px"></div>
+    <div style="white-space: pre; color: {{t.fg}}"><span style="color: {{t.accent}}">⏺</span> Q1. Why are eigenvectors of a symmetric
+     matrix with distinct eigenvalues
+     orthogonal?
+
+  Q2. Which unit w maximizes wᵀΣw, and
+     what is the maximum?
+
+  Q3. What does the second eigenvector of a
+     return covariance matrix capture that
+     the first does not?</div>
+    <div style="flex: 1"></div>
+    <div style="height: 34px; box-sizing: border-box; border: 1px solid {{t.rim}}; border-radius: 12px; display: flex; align-items: center; padding: 0 12px; gap: 8px; background-color: {{t.glassHi}}">
+      <span style="color: {{t.sub}}">&gt;</span>
+      <span style="width: 8px; height: 17px; background-color: {{t.fg}}"></span>
+    </div>
+  </div>
+
+  <sc-if value="{{open}}" hint-placeholder-val="{{ true }}">
+    <div style="position: absolute; left: 315px; top: 190px; width: 840px; height: 560px; z-index: 20; box-sizing: border-box; padding: 26px 30px; display: flex; flex-direction: column; gap: 18px; border-radius: 28px; background-color: {{t.glassDeep}}; border: 1px solid {{t.rim}}; backdrop-filter: blur(40px) saturate(170%); box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 40px 90px rgba(0,0,0,0.45)">
+      <div style="display: flex; align-items: center; justify-content: space-between">
+        <div style="display: flex; align-items: baseline; gap: 14px">
+          <span style="font-size: 18px; line-height: 24px; font-weight: 600; color: {{t.fg}}">Wallpapers</span>
+          <span style="font-size: 12px; color: {{t.sub}}">~/Pictures/walls · 6</span>
+        </div>
+        <button onClick="{{toggle}}" style="height: 28px; padding: 0 12px; border-radius: 999px; border: 1px solid {{t.rim}}; background-color: {{t.glassHi}}; color: {{t.fg}}; font-family: inherit; font-size: 12px; cursor: pointer">esc</button>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+        <button aria-label="fog peaks" onClick="{{c0.pick}}" style="padding: 0; display: flex; flex-direction: column; gap: 8px; border: 0; background-color: transparent; color: {{t.sub}}; font-family: inherit; font-size: 12px; text-align: left; cursor: pointer"><img src="/_blob/bf81c3b4a7b0fcd70ecc7d2e293f345a" alt="" style="width: 100%; height: 160px; object-fit: cover; display: block; border-radius: 16px; box-sizing: border-box; border: 3px solid {{c0.b}}">fog peaks</button>
+        <button aria-label="ember dunes" onClick="{{c1.pick}}" style="padding: 0; display: flex; flex-direction: column; gap: 8px; border: 0; background-color: transparent; color: {{t.sub}}; font-family: inherit; font-size: 12px; text-align: left; cursor: pointer"><img src="/_blob/c956e114807bb5fa5cbe59dce1f58f86" alt="" style="width: 100%; height: 160px; object-fit: cover; display: block; border-radius: 16px; box-sizing: border-box; border: 3px solid {{c1.b}}">ember dunes</button>
+        <button aria-label="pine valley" onClick="{{c2.pick}}" style="padding: 0; display: flex; flex-direction: column; gap: 8px; border: 0; background-color: transparent; color: {{t.sub}}; font-family: inherit; font-size: 12px; text-align: left; cursor: pointer"><img src="/_blob/bdf5a524ef111806c5f9d04de2307c82" alt="" style="width: 100%; height: 160px; object-fit: cover; display: block; border-radius: 16px; box-sizing: border-box; border: 3px solid {{c2.b}}">pine valley</button>
+        <button aria-label="neon district" onClick="{{c3.pick}}" style="padding: 0; display: flex; flex-direction: column; gap: 8px; border: 0; background-color: transparent; color: {{t.sub}}; font-family: inherit; font-size: 12px; text-align: left; cursor: pointer"><img src="/_blob/c64667a044b2846e44e8e8488dff0b01" alt="" style="width: 100%; height: 160px; object-fit: cover; display: block; border-radius: 16px; box-sizing: border-box; border: 3px solid {{c3.b}}">neon district</button>
+        <button aria-label="lone tree" onClick="{{c4.pick}}" style="padding: 0; display: flex; flex-direction: column; gap: 8px; border: 0; background-color: transparent; color: {{t.sub}}; font-family: inherit; font-size: 12px; text-align: left; cursor: pointer"><img src="/_blob/8d583abe2a1fb4f3028c9c3f44c1b642" alt="" style="width: 100%; height: 160px; object-fit: cover; display: block; border-radius: 16px; box-sizing: border-box; border: 3px solid {{c4.b}}">lone tree</button>
+        <button aria-label="aurora" onClick="{{c5.pick}}" style="padding: 0; display: flex; flex-direction: column; gap: 8px; border: 0; background-color: transparent; color: {{t.sub}}; font-family: inherit; font-size: 12px; text-align: left; cursor: pointer"><img src="/_blob/a5f2f8467cb1e2586e99a6f1440e6fff" alt="" style="width: 100%; height: 160px; object-fit: cover; display: block; border-radius: 16px; box-sizing: border-box; border: 3px solid {{c5.b}}">aurora</button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1470,"height":956}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const W = [
+      { name: 'fog peaks', h: 205, a: 200, g: 0.42 },
+      { name: 'ember dunes', h: 14, a: 30, g: 0.38 },
+      { name: 'pine valley', h: 160, a: 95, g: 0.48 },
+      { name: 'neon district', h: 285, a: 330, g: 0.32 },
+      { name: 'lone tree', h: 205, a: 18, g: 0.58 },
+      { name: 'aurora', h: 170, a: 155, g: 0.32 }
+    ];
+    const s = this.state || {};
+    const cur = s.cur ?? 0;
+    const prev = s.prev ?? -1;
+    const open = s.open ?? true;
+    const w = W[cur];
+    const t = {
+      glass: 'hsl(' + w.h + ' 30% 10% / ' + w.g + ')',
+      glassDeep: 'hsl(' + w.h + ' 30% 9% / ' + Math.min(0.72, w.g + 0.18).toFixed(2) + ')',
+      glassHi: 'hsl(0 0% 100% / 0.10)',
+      rim: 'hsl(0 0% 100% / 0.20)',
+      fg: 'hsl(' + w.h + ' 20% 97%)',
+      sub: 'hsl(' + w.h + ' 16% 84%)',
+      accent: 'hsl(' + w.a + ' 85% 72%)'
+    };
+    const layer = (i) => {
+      const on = i === cur || i === prev;
+      return {
+        z: i === cur ? 2 : i === prev ? 1 : 0,
+        o: on ? 1 : 0,
+        tf: on ? 'scale(1)' : 'scale(1.08)',
+        f: on ? 'blur(0px)' : 'blur(16px)'
+      };
+    };
+    const card = (i) => ({
+      b: i === cur ? t.accent : 'transparent',
+      pick: () => { if (i !== cur) this.setState({ prev: cur, cur: i }); }
+    });
+    return {
+      t: t,
+      open: open,
+      toggle: () => this.setState({ open: !open }),
+      w0: layer(0), w1: layer(1), w2: layer(2), w3: layer(3), w4: layer(4), w5: layer(5),
+      c0: card(0), c1: card(1), c2: card(2), c3: card(3), c4: card(4), c5: card(5)
+    };
+  }
+}
+</script>
+</body>
+</html>

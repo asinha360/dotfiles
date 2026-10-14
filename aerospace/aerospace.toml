@@ -1,0 +1,76 @@
+# Monolith tiling. Option-W is reserved for the wallsync global hotkey, so nothing here binds it.
+config-version = 2
+start-at-login = true
+
+persistent-workspaces = ['1', '2', '3', '4', '5']
+default-root-container-layout = 'tiles'
+
+# Top gap leaves room for the SketchyBar pills
+[gaps]
+inner.horizontal = 10
+inner.vertical = 10
+outer.top = [{ monitor."built-in" = 12 }, 44]  # built-in: macOS already reserves ~32pt under the notch
+outer.left = 10
+outer.right = 10
+outer.bottom = 10
+
+[mode.main.binding]
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
+
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+
+alt-1 = 'workspace 1'
+alt-2 = 'workspace 2'
+alt-3 = 'workspace 3'
+alt-4 = 'workspace 4'
+alt-5 = 'workspace 5'
+
+alt-shift-1 = 'move-node-to-workspace 1'
+alt-shift-2 = 'move-node-to-workspace 2'
+alt-shift-3 = 'move-node-to-workspace 3'
+alt-shift-4 = 'move-node-to-workspace 4'
+alt-shift-5 = 'move-node-to-workspace 5'
+
+alt-f = 'fullscreen'
+alt-slash = 'layout tiles horizontal vertical'
+alt-comma = 'layout accordion horizontal vertical'
+alt-r = 'mode resize'
+
+# Panel layouts: study on workspace 1, build on workspace 2
+alt-s = 'exec-and-forget ~/.local/bin/study'
+alt-b = 'exec-and-forget ~/.local/bin/build'
+
+alt-shift-semicolon = 'mode service'
+
+[mode.resize.binding]
+h = 'resize width -50'
+j = 'resize height +50'
+k = 'resize height -50'
+l = 'resize width +50'
+enter = 'mode main'
+esc = 'mode main'
+
+[mode.service.binding]
+r = ['reload-config', 'mode main']
+f = ['layout floating tiling', 'mode main']
+backspace = ['close-all-windows-but-current', 'mode main']
+esc = 'mode main'
+
+# The wallsync picker and transition windows must never be tiled
+[[on-window-detected]]
+if.app-name-regex-substring = '^wallsync$'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.systempreferences'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = 'layout floating'

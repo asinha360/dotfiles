@@ -1,0 +1,41 @@
+ tmux  ·  prefix = Ctrl+b, release, then the key
+
+ SESSIONS                                           PANES
+┌──────────────┬────────────────────────────────┐  ┌──────────────┬────────────────────────────────┐
+│ C-b s        │ pick a session (tree view)     │  │ C-b %        │ split side by side             │
+│ C-b ( / )    │ previous / next session        │  │ C-b "        │ split top / bottom             │
+│ C-b L        │ last session                   │  │ C-b arrow    │ move to pane in that direction │
+│ C-b $        │ rename session                 │  │ C-b ;        │ last pane                      │
+│ C-b d        │ detach (everything keeps on)   │  │ C-b o        │ next pane                      │
+│ C-b :new     │ new session: -s NAME -c DIR    │  │ C-b q 1-9    │ show numbers, jump to pane     │
+│ tmux ls      │ list sessions (from a shell)   │  │ C-b z        │ zoom pane on / off             │
+│ tmux a -t X  │ attach to session X            │  │ C-b space    │ cycle layouts                  │
+└──────────────┴────────────────────────────────┘  │ C-b { / }    │ swap with previous / next pane │
+                                                   │ C-b !        │ break pane out to own window   │
+ WINDOWS                                           │ C-b x        │ kill pane (asks y/n)           │
+┌──────────────┬────────────────────────────────┐  │ mouse drag   │ resize at the border           │
+│ C-b c        │ new window                     │  └──────────────┴────────────────────────────────┘
+│ C-b ,        │ rename window                  │
+│ C-b 1-9      │ jump to window number          │   SCROLL & COPY
+│ C-b n / p    │ next / previous window         │  ┌──────────────┬────────────────────────────────┐
+│ C-b l        │ last window                    │  │ C-b [        │ scroll mode (or mouse wheel)   │
+│ C-b w        │ tree of every window + preview │  │ PgUp PgDn    │ page up / down                 │
+│ C-b f        │ find window by text            │  │ C-r / C-s    │ search up / down               │
+│ C-b .        │ move window to a new number    │  │ q            │ leave scroll mode              │
+│ C-b &        │ kill window (asks y/n)         │  │ mouse drag   │ select, copies to tmux buffer  │
+└──────────────┴────────────────────────────────┘  │ C-b ]        │ paste tmux buffer              │
+                                                   └──────────────┴────────────────────────────────┘
+ INSIDE C-b s / C-b w
+┌──────────────┬────────────────────────────────┐   YOUR SETUP
+│ ↑ ↓  Enter   │ move / switch to it            │  ┌──────────────┬────────────────────────────────┐
+│ → ←          │ expand / collapse              │  │ C-b h        │ this cheatsheet (q closes)     │
+│ x            │ kill highlighted item          │  │ C-b r        │ reload ~/.tmux.conf            │
+│ q  Esc       │ close the tree                 │  │ C-b ?        │ list every key binding         │
+└──────────────┴────────────────────────────────┘  │ C-b :        │ command prompt                 │
+                                                   │ C-b C-b      │ send Ctrl+B through to Claude  │
+                                                   │ ! in bar     │ agent in that window needs you │
+                                                   │ C-b T        │ session picker (sesh + fzf)    │
+                                                   │ C-b g        │ lazygit popup in this dir      │
+                                                   │ C-b a        │ ask Claude popup in this dir   │
+                                                   │ C-b b        │ status bar on / off            │
+                                                   └──────────────┴────────────────────────────────┘

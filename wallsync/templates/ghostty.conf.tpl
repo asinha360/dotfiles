@@ -1,0 +1,23 @@
+# Rendered by wallsync. Matches the OSC morph frames: 10 = fg, 11 = panel, 12 = hi.
+background = {{panel_hex}}
+foreground = {{fg_hex}}
+cursor-color = {{hi_hex}}
+cursor-text = {{solid_hex}}
+selection-background = {{sel_flat}}
+selection-foreground = {{hi_hex}}
+palette = 0={{ansi0_hex}}
+palette = 1={{ansi1_hex}}
+palette = 2={{ansi2_hex}}
+palette = 3={{ansi3_hex}}
+palette = 4={{ansi4_hex}}
+palette = 5={{ansi5_hex}}
+palette = 6={{ansi6_hex}}
+palette = 7={{ansi7_hex}}
+palette = 8={{ansi8_hex}}
+palette = 9={{ansi9_hex}}
+palette = 10={{ansi10_hex}}
+palette = 11={{ansi11_hex}}
+palette = 12={{ansi12_hex}}
+palette = 13={{ansi13_hex}}
+palette = 14={{ansi14_hex}}
+palette = 15={{ansi15_hex}}
