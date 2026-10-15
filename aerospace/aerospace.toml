@@ -5,6 +5,12 @@ start-at-login = true
 persistent-workspaces = ['1', '2', '3', '4', '5']
 default-root-container-layout = 'tiles'
 
+# Keep the bar's workspace numbers current: the focused workspace on every
+# switch, which workspaces hold windows on every focus change
+exec-on-workspace-change = ['/bin/bash', '-c',
+  '/opt/homebrew/bin/sketchybar --trigger aerospace_workspace_change FOCUSED=$AEROSPACE_FOCUSED_WORKSPACE']
+on-focus-changed = ['exec-and-forget /opt/homebrew/bin/sketchybar --trigger aerospace_workspace_change']
+
 # Top gap leaves room for the SketchyBar pills
 [gaps]
 inner.horizontal = 10

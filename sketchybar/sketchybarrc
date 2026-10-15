@@ -1,10 +1,14 @@
 #!/bin/bash
-# Monolith bar (board A): a transparent bar carrying three floating pills.
-# Stats come from bar-stats, the claude item from Claude Code hooks
-# (claude_state event), colours from wallsync.
+# Monolith bar (board A, top-bar option 2 "notch wings"): a transparent bar
+# carrying a floating pill in each corner, and black wings that widen the notch
+# with the date, time and battery (a black island stands in on displays
+# without a notch). Stats come from bar-stats, the claude item from Claude Code
+# hooks (claude_state event), workspaces from AeroSpace
+# (aerospace_workspace_change), colours from wallsync.
 
 PLUGIN_DIR="$CONFIG_DIR/plugins"
 BIN="$HOME/.local/bin"
+AEROSPACE=/opt/homebrew/bin/aerospace
 
 # Defaults are the H=205 sample palette; wallsync's rendered file overrides them.
 PILL=0x9E121517
@@ -12,45 +16,82 @@ LINE=0x47AFB9C0
 LINE_HI=0xB3E2E6E9
 FG=0xFFD7DCE0
 SUB=0xFFACB4B9
+DIM=0xFF808C93
 HI=0xFFEDF0F2
+RED=0xFFCF8A92
 COLORS="$HOME/.cache/wallsync/out/sketchybar.sh"
 [ -f "$COLORS" ] && source "$COLORS"
 
-FONT="FiraCode Nerd Font:Regular:11.0"
+FONT="FiraCode Nerd Font:Regular:12.5"
 pill=(background.color=$PILL background.border_color=$LINE background.border_width=1
-      background.corner_radius=6 background.height=26)
+      background.corner_radius=6 background.height=28)
+# Wings are notch black whatever the palette and as tall as the notch: y 0-32 of
+# the 44pt bar (y_offset is upward from its centre). SketchyBar rounds every
+# corner and skips backgrounds taller than the bar, so a square label
+# background over the top half (y 0-16) squares the top corners off.
+wing_bg=(background.drawing=on background.color=0xFF000000 background.corner_radius=14
+         background.height=32 background.y_offset=6)
+wing_label=(label.y_offset=6 label.background.drawing=on label.background.color=0xFF000000
+            label.background.corner_radius=0 label.background.height=16 label.background.y_offset=14)
 
-# The M2 Air notch is 179pt wide; notch_width=200 keeps `e` items ~10pt clear of it.
-sketchybar --bar position=top height=34 y_offset=6 margin=10 color=0x00000000 \
-                 topmost=off shadow=off padding_left=0 padding_right=0 notch_width=200
+# The M2 Air notch spans x 646-825 (179pt). notch_width=131 lets each wing
+# reach 24pt under it, past both corner radii, so wing and notch read as one shape.
+sketchybar --bar position=top height=44 y_offset=0 margin=10 color=0x00000000 \
+                 topmost=off shadow=off padding_left=0 padding_right=0 notch_width=131
 
 sketchybar --default label.font="$FONT" icon.font="$FONT" label.color=$FG \
                      padding_left=0 padding_right=0 \
                      label.padding_left=0 label.padding_right=0 \
                      icon.padding_left=0 icon.padding_right=0
 
-sketchybar --add event claude_state
+sketchybar --add event claude_state \
+           --add event aerospace_workspace_change
 
-# Left pill. Item padding_left/right is the gap; a bracket spans its members
-# plus the outer paddings of the first and last one.
-sketchybar --add item cpu left --set cpu label="CPU --%" padding_left=12 \
+# Left pill: workspaces 1-5, a divider, stats. Item padding_left/right is the
+# gap; a bracket spans its members plus the outer paddings of the first and last one.
+for i in 1 2 3 4 5; do
+  sketchybar --add item ws.$i left \
+             --set ws.$i label=$i label.width=22 label.align=center padding_left=2 \
+                         label.background.drawing=on label.background.color=0x00000000 \
+                         label.background.border_width=1 label.background.border_color=0x00000000 \
+                         label.background.corner_radius=4 label.background.height=20 \
+                         click_script="$AEROSPACE workspace $i"
+done
+sketchybar --set ws.1 padding_left=4 script="$PLUGIN_DIR/aerospace.sh" \
+           --subscribe ws.1 aerospace_workspace_change front_app_switched system_woke \
+           --add item ws.sep left \
+           --set ws.sep width=1 padding_left=14 background.drawing=on \
+                        background.color=$LINE background.height=14 \
+           --add item cpu left --set cpu label="CPU --%" padding_left=16 \
            --add item gpu left --set gpu label="GPU --%" padding_left=18 \
            --add item ram left --set ram label="RAM --%" padding_left=18 \
            --add item temp left --set temp label="--°C" padding_left=18 padding_right=12 \
-           --add bracket pill.stats cpu gpu ram temp --set pill.stats "${pill[@]}"
+           --add bracket pill.stats ws.1 ws.2 ws.3 ws.4 ws.5 ws.sep cpu gpu ram temp \
+           --set pill.stats "${pill[@]}"
 
-# Centre pill: `clock` sits at the centre of plain displays, `clock.notch`
-# just right of the notch. displays.sh assigns each to its displays.
-sketchybar --add item clock center \
-           --set clock padding_left=14 padding_right=14 update_freq=10 \
-                       script="$PLUGIN_DIR/clock.sh" \
-           --subscribe clock system_woke \
-           --add item clock.notch e \
-           --set clock.notch padding_left=14 padding_right=14 \
+# Wings: `q` items end at the notch's left edge, `e` items start at its right
+# edge. Each is 164pt wide (label.width includes the label padding): 140 on
+# screen plus 24 under the notch.
+sketchybar --add item wing.l q \
+           --set wing.l "${wing_bg[@]}" "${wing_label[@]}" label.width=164 label.align=left \
+                        label.padding_left=18 update_freq=10 script="$PLUGIN_DIR/clock.sh" \
+           --subscribe wing.l system_woke \
+           --add item wing.r e \
+           --set wing.r "${wing_bg[@]}" "${wing_label[@]}" label.width=164 label.align=right \
+                        label.padding_right=16 \
+                        label.highlight_color=$RED update_freq=120 script="$PLUGIN_DIR/battery.sh" \
+           --subscribe wing.r power_source_change system_woke
+
+# Island: the same black shape centred on displays without a notch.
+# displays.sh assigns the wings and the island to their displays.
+sketchybar --add item island.time center \
+           --set island.time "${wing_label[@]}" label.padding_left=18 \
                              script="$PLUGIN_DIR/displays.sh" \
-           --subscribe clock.notch display_change system_woke \
-           --add bracket pill.clock clock --set pill.clock "${pill[@]}" \
-           --add bracket pill.clock.notch clock.notch --set pill.clock.notch "${pill[@]}"
+           --subscribe island.time display_change system_woke \
+           --add item island.batt center \
+           --set island.batt "${wing_label[@]}" label.padding_left=24 label.padding_right=16 \
+                             label.highlight_color=$RED \
+           --add bracket island island.time island.batt --set island "${wing_bg[@]}"
 
 # Right pill, added right to left. An empty label with zero padding hides an
 # item (never toggle drawing: SketchyBar #787 on Tahoe).
@@ -59,7 +100,7 @@ sketchybar --add item wall right \
                       label.padding_left=8 label.padding_right=8 \
                       label.background.drawing=on label.background.color=0x00000000 \
                       label.background.border_color=$LINE_HI label.background.border_width=1 \
-                      label.background.corner_radius=4 label.background.height=20 \
+                      label.background.corner_radius=4 label.background.height=22 \
                       click_script="$BIN/wallsync pick" \
            --add item vol right \
            --set vol padding_right=14 script="$PLUGIN_DIR/volume.sh" \

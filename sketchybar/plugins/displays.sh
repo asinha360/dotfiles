@@ -1,5 +1,6 @@
 #!/bin/bash
-# Puts `clock.notch` on notched displays and `clock` on the others.
+# Puts the wings (`wing.l`, `wing.r`) on notched displays and the island
+# (`island.time`, `island.batt`) on the others.
 # SketchyBar addresses displays by arrangement id; notched screens (NSScreen
 # safe-area top inset > 0) are matched to it through CGDirectDisplayID.
 # display_change also fires when the pointer moves between displays, so event
@@ -27,4 +28,5 @@ ids=$(printf '%s' "$displays" | jq -r --argjson n "[$notched]" '
 printf '%s' "$displays" > "$cache"
 notch=${ids%%$'\t'*}
 plain=${ids#*$'\t'}
-sketchybar --set clock display=${plain:-$NOWHERE} --set clock.notch display=${notch:-$NOWHERE}
+sketchybar --set wing.l display=${notch:-$NOWHERE} --set wing.r display=${notch:-$NOWHERE} \
+           --set island.time display=${plain:-$NOWHERE} --set island.batt display=${plain:-$NOWHERE}

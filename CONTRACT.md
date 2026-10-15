@@ -93,6 +93,7 @@ Exit codes: 0 ok, 1 error, 3 daemon not running. IPC: Unix socket, newline-delim
 
 ## Cross-component names
 - **Claude state** → SketchyBar: `sketchybar --trigger claude_state STATE=running|waiting|idle SESSION=<tmux session name or cwd basename>` (B4 owns both the item and the hooks fragment).
+- **Workspaces** → SketchyBar: AeroSpace's `exec-on-workspace-change` sends `sketchybar --trigger aerospace_workspace_change FOCUSED=<workspace>` and `on-focus-changed` sends it without `FOCUSED`; `plugins/aerospace.sh` then redraws `ws.1`–`ws.5`.
 - **Study sessions** (B2 `bin/study`): `vault`, `notes`, `cava`, `ask`. Window title = tmux session name (`set-titles-string '#S'`), so AeroSpace can identify the windows.
   - `vault`: `yazi ~/projects/study-vault` on top 70%, `vault-due --watch` below.
   - `notes`: `nvim` in the vault.

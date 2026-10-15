@@ -9,14 +9,19 @@
     "EngineA.dc.html": {"h": 956, "title": "A · Monolith (chosen) — skew carousel, mono palette, random wipe / grow, Fira Code", "w": 1470, "x": 0, "y": 0, "page": "engine", "is_interactive": true},
     "EngineB.dc.html": {"h": 956, "title": "B · Tonal — dock picker, Material You palette, circle grow", "w": 1470, "x": 1550, "y": 0, "page": "engine", "is_interactive": true},
     "EngineC.dc.html": {"h": 956, "title": "C · Glass — grid sheet, liquid glass, blur zoom", "w": 1470, "x": 0, "y": 1076, "page": "engine", "is_interactive": true},
-    "EngineD.dc.html": {"h": 956, "title": "D · Paper — filmstrip, light study palette, ink wipe", "w": 1470, "x": 1550, "y": 1076, "page": "engine", "is_interactive": true}
+    "EngineD.dc.html": {"h": 956, "title": "D · Paper — filmstrip, light study palette, ink wipe", "w": 1470, "x": 1550, "y": 1076, "page": "engine", "is_interactive": true},
+    "Bar1.dc.html": {"h": 320, "title": "1 · Two pills — clock joins the right pill, workspaces lead the left", "w": 1470, "x": 0, "y": 0, "page": "bar"},
+    "Bar2.dc.html": {"h": 320, "title": "2 · Notch wings (chosen) — date, time and battery flank the notch in black", "w": 1470, "x": 0, "y": 440, "page": "bar"},
+    "Bar3.dc.html": {"h": 320, "title": "3 · Full strip — edge-to-edge bar, workspace tabs, window title", "w": 1470, "x": 0, "y": 880, "page": "bar"},
+    "Bar4.dc.html": {"h": 320, "title": "4 · Corners — workspace dots left, battery + time right; the rest in a click popup", "w": 1470, "x": 0, "y": 1320, "page": "bar", "is_interactive": true}
   },
   "createdOnFiles": {"at": "2026-10-14T09:40:35Z", "v": 1},
   "designSystems": [],
-  "launch": {"view": "canvas", "page": "engine"},
+  "launch": {"view": "canvas", "page": "bar"},
   "notes": {
     "title": {"kind": "title1", "maxW": 3020, "text": "Terminal rice — the vision", "w": 240, "x": 0, "y": -300},
-    "engineTitle": {"kind": "title1", "maxW": 3020, "text": "Wallpaper + theme engine — four directions", "x": 0, "y": -300, "page": "engine"}
+    "engineTitle": {"kind": "title1", "maxW": 3020, "text": "Wallpaper + theme engine — four directions", "x": 0, "y": -300, "page": "engine"},
+    "barTitle": {"kind": "title1", "maxW": 1470, "text": "Top bar — four layouts", "x": 0, "y": -300, "page": "bar"}
   },
   "order": [
     "Main.dc.html",
@@ -26,11 +31,16 @@
     "EngineA.dc.html",
     "EngineB.dc.html",
     "EngineC.dc.html",
-    "EngineD.dc.html"
+    "EngineD.dc.html",
+    "Bar1.dc.html",
+    "Bar2.dc.html",
+    "Bar3.dc.html",
+    "Bar4.dc.html"
   ],
   "pages": [
     {"id": "vision", "name": "Terminal vision"},
-    {"id": "engine", "name": "Wallpaper engine"}
+    {"id": "engine", "name": "Wallpaper engine"},
+    {"id": "bar", "name": "Top bar"}
   ],
   "title": "Terminal Rice Vision"
 }
