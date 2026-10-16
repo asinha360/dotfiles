@@ -27,17 +27,17 @@ pill=(background.color=$PILL background.border_color=$LINE background.border_wid
       background.corner_radius=6 background.height=28)
 # Wings are notch black whatever the palette and as tall as the notch: y 0-32 of
 # the 44pt bar (y_offset is upward from its centre). SketchyBar rounds every
-# corner and skips backgrounds taller than the bar, so a square label
-# background over the top half (y 0-16) squares the top corners off.
-wing_bg=(background.drawing=on background.color=0xFF000000 background.corner_radius=14
-         background.height=32 background.y_offset=6)
-wing_label=(label.y_offset=6 label.background.drawing=on label.background.color=0xFF000000
-            label.background.corner_radius=0 label.background.height=16 label.background.y_offset=14)
+# corner and skips backgrounds taller than the bar, so the background is exactly
+# bar height and raised 12pt off the top of the screen, which clips its top
+# corners (radius 12) away: square top, rounded bottom, one shape.
+wing_bg=(background.drawing=on background.color=0xFF000000 background.corner_radius=12
+         background.height=44 background.y_offset=12)
+wing_label=(label.y_offset=6)
 
-# The M2 Air notch spans x 646-825 (179pt). notch_width=131 lets each wing
-# reach 24pt under it, past both corner radii, so wing and notch read as one shape.
+# The M2 Air notch spans x 646-825 (179pt), centred on the screen (x 735).
+# notch_width must be even to keep the q and e items symmetric about x 735.
 sketchybar --bar position=top height=44 y_offset=0 margin=10 color=0x00000000 \
-                 topmost=off shadow=off padding_left=0 padding_right=0 notch_width=131
+                 topmost=off shadow=off padding_left=0 padding_right=0 notch_width=130
 
 sketchybar --default label.font="$FONT" icon.font="$FONT" label.color=$FG \
                      padding_left=0 padding_right=0 \
@@ -70,26 +70,29 @@ sketchybar --set ws.1 padding_left=4 script="$PLUGIN_DIR/aerospace.sh" \
            --set pill.stats "${pill[@]}"
 
 # Wings: `q` items end at the notch's left edge, `e` items start at its right
-# edge. Each is 164pt wide (label.width includes the label padding): 140 on
-# screen plus 24 under the notch.
+# edge. Each is 165pt wide (label.width includes the label padding; SketchyBar
+# adds 1pt before the label): 140 on screen plus 25 under the notch. One
+# bracket background spans both wings and the notch, so there is no seam under
+# its rounded corners. Paddings give both texts the same 17.5pt inset.
 sketchybar --add item wing.l q \
-           --set wing.l "${wing_bg[@]}" "${wing_label[@]}" label.width=164 label.align=left \
-                        label.padding_left=18 update_freq=10 script="$PLUGIN_DIR/clock.sh" \
+           --set wing.l "${wing_label[@]}" label.width=164 label.align=left \
+                        label.padding_left=16 script="$PLUGIN_DIR/clock.sh" \
            --subscribe wing.l system_woke \
            --add item wing.r e \
-           --set wing.r "${wing_bg[@]}" "${wing_label[@]}" label.width=164 label.align=right \
-                        label.padding_right=16 \
+           --set wing.r "${wing_label[@]}" label.width=164 label.align=right \
+                        label.padding_right=17 \
                         label.highlight_color=$RED update_freq=120 script="$PLUGIN_DIR/battery.sh" \
-           --subscribe wing.r power_source_change system_woke
+           --subscribe wing.r power_source_change system_woke \
+           --add bracket wings wing.l wing.r --set wings "${wing_bg[@]}"
 
 # Island: the same black shape centred on displays without a notch.
 # displays.sh assigns the wings and the island to their displays.
 sketchybar --add item island.time center \
-           --set island.time "${wing_label[@]}" label.padding_left=18 \
+           --set island.time "${wing_label[@]}" label.padding_left=16 \
                              script="$PLUGIN_DIR/displays.sh" \
            --subscribe island.time display_change system_woke \
            --add item island.batt center \
-           --set island.batt "${wing_label[@]}" label.padding_left=24 label.padding_right=16 \
+           --set island.batt "${wing_label[@]}" label.padding_left=24 label.padding_right=17 \
                              label.highlight_color=$RED \
            --add bracket island island.time island.batt --set island "${wing_bg[@]}"
 
@@ -119,5 +122,7 @@ sketchybar --add item wall right \
 
 # Detached so SketchyBar does not wait on it (#807); it replaces any older instance.
 [ -x "$BIN/bar-stats" ] && nohup "$BIN/bar-stats" >/dev/null 2>&1 &
+# Same for the notch feed: clock on the minute, battery on every change.
+nohup "$PLUGIN_DIR/notch.sh" >/dev/null 2>&1 &
 
 sketchybar --update
