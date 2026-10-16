@@ -3,3 +3,6 @@
 *.xcodeproj/
 .DS_Store
 wallsync/.build/
+
+# Generated study guide (docs/guide/build_guide.py renders it locally)
+docs/guide/
