@@ -31,13 +31,18 @@
 ┌──────────────┬────────────────────────────────┐
 │ ⌥ 1-5        │ go to workspace / click bar   ●│
 │ ⌥⇧ 1-5       │ send window to workspace       │
-│ ⌥ h j k l    │ focus the window that way     ●│
-│ ⌥⇧ h j k l   │ move the window that way       │
+│ ⌥ h j k l    │ focus that way, across screens●│
+│ ⌥⇧ h j k l   │ move that way, across screens  │
+│ ⌥ Tab        │ go to the other screen        ●│
+│ ⌥⇧ Tab       │ send window to other screen    │
 │ ⌥ f          │ fullscreen inside the tiling   │
 │ ⌥ /          │ tiles; again flips direction   │
 │ ⌥ ,          │ accordion; again flips         │
-│ ws 1  2  3   │ study, build, Assistant        │
+│ ws 1  2  3   │ study, build, Projects         │
 │ ws 4  5      │ free                           │
+│ 2 screens    │ 1-3 external, 4-5 laptop       │
+│ bar [n]      │ n is on this screen            │
+│ bright / dim │ focus here / focus elsewhere   │
 └──────────────┴────────────────────────────────┘
 
  AEROSPACE MODES
@@ -130,6 +135,10 @@
 │ C-b .        │ move window to a number        │
 │ C-b <        │ window menu: swap, kill        │
 │ C-b &        │ kill window (asks)             │
+│ bar filled   │ the window you are in          │
+│ bar tinted ! │ bell: a window needs you       │
+│ bar brighter │ last window, C-b l goes there  │
+│ click, wheel │ on the bar: pick / step        │
 └──────────────┴────────────────────────────────┘
 
  PANES

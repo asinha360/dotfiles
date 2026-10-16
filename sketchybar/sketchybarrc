@@ -47,26 +47,33 @@ sketchybar --default label.font="$FONT" icon.font="$FONT" label.color=$FG \
 sketchybar --add event claude_state \
            --add event aerospace_workspace_change
 
-# Left pill: workspaces 1-5, a divider, stats. Item padding_left/right is the
+# Left pill: workspaces, a divider, stats. Item padding_left/right is the
 # gap; a bracket spans its members plus the outer paddings of the first and last one.
-for i in 1 2 3 4 5; do
-  sketchybar --add item ws.$i left \
-             --set ws.$i label=$i label.width=22 label.align=center padding_left=2 \
-                         label.background.drawing=on label.background.color=0x00000000 \
-                         label.background.border_width=1 label.background.border_color=0x00000000 \
-                         label.background.corner_radius=4 label.background.height=20 \
-                         click_script="$AEROSPACE workspace $i"
+# Each display gets its own ws.<display>.<n> items; aerospace.sh shows only the
+# workspaces living on that display. ws.start is the pill's inner left edge.
+sketchybar --add item ws.start left \
+           --set ws.start width=2 script="$PLUGIN_DIR/aerospace.sh" \
+           --subscribe ws.start aerospace_workspace_change front_app_switched system_woke display_change
+ws=(ws.start)
+for d in 1 2; do
+  for i in 1 2 3 4 5; do
+    sketchybar --add item ws.$d.$i left \
+               --set ws.$d.$i display=$d label=$i label.width=22 label.align=center padding_left=2 \
+                              label.background.drawing=on label.background.color=0x00000000 \
+                              label.background.border_width=1 label.background.border_color=0x00000000 \
+                              label.background.corner_radius=4 label.background.height=20 \
+                              click_script="$AEROSPACE workspace $i"
+    ws+=(ws.$d.$i)
+  done
 done
-sketchybar --set ws.1 padding_left=4 script="$PLUGIN_DIR/aerospace.sh" \
-           --subscribe ws.1 aerospace_workspace_change front_app_switched system_woke \
-           --add item ws.sep left \
+sketchybar --add item ws.sep left \
            --set ws.sep width=1 padding_left=14 background.drawing=on \
                         background.color=$LINE background.height=14 \
            --add item cpu left --set cpu label="CPU --%" padding_left=16 \
            --add item gpu left --set gpu label="GPU --%" padding_left=18 \
            --add item ram left --set ram label="RAM --%" padding_left=18 \
            --add item temp left --set temp label="--°C" padding_left=18 padding_right=12 \
-           --add bracket pill.stats ws.1 ws.2 ws.3 ws.4 ws.5 ws.sep cpu gpu ram temp \
+           --add bracket pill.stats "${ws[@]}" ws.sep cpu gpu ram temp \
            --set pill.stats "${pill[@]}"
 
 # Wings: `q` items end at the notch's left edge, `e` items start at its right
@@ -86,13 +93,15 @@ sketchybar --add item wing.l q \
            --add bracket wings wing.l wing.r --set wings "${wing_bg[@]}"
 
 # Island: the same black shape centred on displays without a notch.
-# displays.sh assigns the wings and the island to their displays.
+# displays.sh assigns the wings and the island to their displays. The time is
+# 97.5pt wide and SketchyBar floors it, so 1pt of right padding keeps its last
+# digit whole (taken back from the battery's left padding).
 sketchybar --add item island.time center \
-           --set island.time "${wing_label[@]}" label.padding_left=16 \
+           --set island.time "${wing_label[@]}" label.padding_left=16 label.padding_right=1 \
                              script="$PLUGIN_DIR/displays.sh" \
            --subscribe island.time display_change system_woke \
            --add item island.batt center \
-           --set island.batt "${wing_label[@]}" label.padding_left=24 label.padding_right=17 \
+           --set island.batt "${wing_label[@]}" label.padding_left=23 label.padding_right=17 \
                              label.highlight_color=$RED \
            --add bracket island island.time island.batt --set island "${wing_bg[@]}"
 
