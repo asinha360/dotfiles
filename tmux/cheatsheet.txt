@@ -1,41 +1,356 @@
- tmux  ·  prefix = Ctrl+b, release, then the key
+ KEYS  /word search  n next  space b page  g G top end  q close
+ ● learn first   C- Ctrl  M- or ⌥ Option  ⇧ Shift  ⌘ Cmd  ⏎ Enter  L = ⇧l
 
- SESSIONS                                           PANES
-┌──────────────┬────────────────────────────────┐  ┌──────────────┬────────────────────────────────┐
-│ C-b s        │ pick a session (tree view)     │  │ C-b %        │ split side by side             │
-│ C-b ( / )    │ previous / next session        │  │ C-b "        │ split top / bottom             │
-│ C-b L        │ last session                   │  │ C-b arrow    │ move to pane in that direction │
-│ C-b $        │ rename session                 │  │ C-b ;        │ last pane                      │
-│ C-b d        │ detach (everything keeps on)   │  │ C-b o        │ next pane                      │
-│ C-b :new     │ new session: -s NAME -c DIR    │  │ C-b q 1-9    │ show numbers, jump to pane     │
-│ tmux ls      │ list sessions (from a shell)   │  │ C-b z        │ zoom pane on / off             │
-│ tmux a -t X  │ attach to session X            │  │ C-b space    │ cycle layouts                  │
-└──────────────┴────────────────────────────────┘  │ C-b { / }    │ swap with previous / next pane │
-                                                   │ C-b !        │ break pane out to own window   │
- WINDOWS                                           │ C-b x        │ kill pane (asks y/n)           │
-┌──────────────┬────────────────────────────────┐  │ mouse drag   │ resize at the border           │
-│ C-b c        │ new window                     │  └──────────────┴────────────────────────────────┘
+ THE MAP  one modifier per layer
+┌──────────────┬────────────────────────────────┐
+│ ⌥ Option     │ AeroSpace: macOS windows      ●│
+│ C-b          │ tmux: sessions/windows/panes  ●│
+│ Space        │ nvim leader (notes, code)     ●│
+│ ⌘ Cmd        │ Ghostty and macOS              │
+│ ⌥w           │ wallpaper + theme picker      ●│
+│ h j k l      │ direction, everywhere          │
+│ add ⇧        │ carry the window along         │
+│ 1-9          │ places: workspace, window, tab │
+│ q  Esc       │ back out of anything           │
+│ ?  F1        │ help inside each tool          │
+│ ⌥ hjkl fsbrw │ global: never reach the app    │
+└──────────────┴────────────────────────────────┘
+
+ LEARN IT
+┌──────────────┬────────────────────────────────┐
+│ week 1       │ the map + every ● key          │
+│ week 2 on    │ one new box a day, all day     │
+│ stuck?       │ C-b h, /word, use the key      │
+│ C-b /  key   │ what does this tmux key do?   ●│
+│ C-b ?        │ every tmux key (C-s searches)  │
+│ F1   ?       │ help in yazi, in lazygit       │
+│ keys.md      │ vault cards, back when due     │
+└──────────────┴────────────────────────────────┘
+
+ WORKSPACES  ⌥ = AeroSpace
+┌──────────────┬────────────────────────────────┐
+│ ⌥ 1-5        │ go to workspace / click bar   ●│
+│ ⌥⇧ 1-5       │ send window to workspace       │
+│ ⌥ h j k l    │ focus the window that way     ●│
+│ ⌥⇧ h j k l   │ move the window that way       │
+│ ⌥ f          │ fullscreen inside the tiling   │
+│ ⌥ /          │ tiles; again flips direction   │
+│ ⌥ ,          │ accordion; again flips         │
+│ ws 1  2  3   │ study, build, Assistant        │
+│ ws 4  5      │ free                           │
+└──────────────┴────────────────────────────────┘
+
+ AEROSPACE MODES
+┌──────────────┬────────────────────────────────┐
+│ ⌥ r          │ resize mode:                   │
+│   h  l       │ narrower / wider               │
+│   j  k       │ taller / shorter               │
+│   ⏎  Esc     │ done                           │
+│ ⌥⇧ ;         │ service mode:                  │
+│   r          │ reload AeroSpace config        │
+│   f          │ float / tile this window       │
+│   ⌫          │ close all but this window      │
+│   Esc        │ back to normal                 │
+└──────────────┴────────────────────────────────┘
+
+ DAILY FLOW
+┌──────────────┬────────────────────────────────┐
+│ ⌥ s          │ study panels on ws 1          ●│
+│              │ vault | notes | cava + ask     │
+│ ⌥ b          │ build panels on ws 2           │
+│              │ code | agent + bench           │
+│ build DIR    │ build panels rooted at DIR     │
+│ Space od     │ today's daily note            ●│
+│ REVIEW QUEUE │ notes due, under yazi          │
+│ focus 25     │ 25-min block (50, stop)        │
+└──────────────┴────────────────────────────────┘
+
+ BAR + WALLPAPER
+┌──────────────┬────────────────────────────────┐
+│ ⌥ w          │ wallpaper picker:              │
+│   ← →  h l   │ browse                         │
+│   ⏎  click   │ apply; every theme follows     │
+│   Esc        │ close (or click outside)       │
+│ wallsync     │ next | prev | random (shell)   │
+│ click 1-5    │ switch workspace               │
+│ click timer  │ start 50 min / stop            │
+│ click wall   │ open the picker                │
+└──────────────┴────────────────────────────────┘
+
+ GHOSTTY  ⌘
+┌──────────────┬────────────────────────────────┐
+│ ⌘ =  ⌘ -     │ font bigger / smaller          │
+│ ⌘ 0          │ font back to normal            │
+│ ⌘ k          │ clear the screen               │
+│ ⌘ f          │ search the screen              │
+│ ⌘ c  ⌘ v     │ copy / paste                   │
+│ ⌘ ←  ⌘ →     │ start / end of line            │
+│ ⌘ ⌫          │ delete to start of line        │
+│ ⌘ ⇧ p        │ command palette                │
+│ ⌘ ,  ⌘ ⇧ ,   │ open / reload config           │
+│ ⌘ n  ⌘ w     │ new / close window             │
+│ avoid ⌘ ⏎    │ fullscreen: ⌥ loses window     │
+│ avoid ⌘d ⌘t  │ use tmux panes, windows        │
+└──────────────┴────────────────────────────────┘
+
+ SESSIONS
+┌──────────────┬────────────────────────────────┐
+│ C-b s        │ pick a session (tree)         ●│
+│ C-b T        │ sesh: fuzzy, any project      ●│
+│ C-b ( )      │ previous / next session        │
+│ C-b L        │ last session                   │
+│ C-b $        │ rename session                 │
+│ C-b d        │ detach (all keeps running)    ●│
+│ C-b :new     │ new: -s NAME -c DIR            │
+│ tmux ls      │ list sessions (shell)          │
+│ tmux a -t X  │ attach to session X            │
+└──────────────┴────────────────────────────────┘
+
+ INSIDE C-b s  C-b w  C-b T
+┌──────────────┬────────────────────────────────┐
+│ (a) (1)      │ type the key shown: jump       │
+│ ↑ ↓  ⏎       │ move / switch to it            │
+│ → ←          │ expand / collapse              │
+│ C-s  n       │ search names, next match       │
+│ x            │ kill highlighted item          │
+│ type         │ filters the C-b T list         │
+│ q  Esc       │ close                          │
+└──────────────┴────────────────────────────────┘
+
+ WINDOWS  tabs in the status bar
+┌──────────────┬────────────────────────────────┐
+│ C-b c        │ new window                    ●│
+│ C-b 1-9      │ jump to window                ●│
+│ C-b '        │ jump to window by number       │
+│ C-b n  p     │ next / previous window         │
+│ C-b l        │ last window                    │
 │ C-b ,        │ rename window                  │
-│ C-b 1-9      │ jump to window number          │   SCROLL & COPY
-│ C-b n / p    │ next / previous window         │  ┌──────────────┬────────────────────────────────┐
-│ C-b l        │ last window                    │  │ C-b [        │ scroll mode (or mouse wheel)   │
-│ C-b w        │ tree of every window + preview │  │ PgUp PgDn    │ page up / down                 │
-│ C-b f        │ find window by text            │  │ C-r / C-s    │ search up / down               │
-│ C-b .        │ move window to a new number    │  │ q            │ leave scroll mode              │
-│ C-b &        │ kill window (asks y/n)         │  │ mouse drag   │ select, copies to tmux buffer  │
-└──────────────┴────────────────────────────────┘  │ C-b ]        │ paste tmux buffer              │
-                                                   └──────────────┴────────────────────────────────┘
- INSIDE C-b s / C-b w
-┌──────────────┬────────────────────────────────┐   YOUR SETUP
-│ ↑ ↓  Enter   │ move / switch to it            │  ┌──────────────┬────────────────────────────────┐
-│ → ←          │ expand / collapse              │  │ C-b h        │ this cheatsheet (q closes)     │
-│ x            │ kill highlighted item          │  │ C-b r        │ reload ~/.tmux.conf            │
-│ q  Esc       │ close the tree                 │  │ C-b ?        │ list every key binding         │
-└──────────────┴────────────────────────────────┘  │ C-b :        │ command prompt                 │
-                                                   │ C-b C-b      │ send Ctrl+B through to Claude  │
-                                                   │ ! in bar     │ agent in that window needs you │
-                                                   │ C-b T        │ session picker (sesh + fzf)    │
-                                                   │ C-b g        │ lazygit popup in this dir      │
-                                                   │ C-b a        │ ask Claude popup in this dir   │
-                                                   │ C-b b        │ status bar on / off            │
-                                                   └──────────────┴────────────────────────────────┘
+│ C-b w        │ every window, with preview     │
+│ C-b f        │ find window by text            │
+│ C-b .        │ move window to a number        │
+│ C-b <        │ window menu: swap, kill        │
+│ C-b &        │ kill window (asks)             │
+└──────────────┴────────────────────────────────┘
+
+ PANES
+┌──────────────┬────────────────────────────────┐
+│ C-b %        │ split side by side            ●│
+│ C-b "        │ split top / bottom            ●│
+│ C-b arrow    │ go to the pane that way       ●│
+│ C-b ;        │ last pane                      │
+│ C-b o        │ next pane                      │
+│ C-b q 1-9    │ show numbers, jump to one      │
+│ C-b z        │ zoom pane on / off            ●│
+│ C-b *        │ new floating pane              │
+│ C-b { }      │ swap with previous / next      │
+│ C-b !        │ break pane into a window       │
+│ C-b m        │ mark pane (swap, join)         │
+│ C-b >        │ pane menu                      │
+│ C-b x        │ kill pane (asks)               │
+│ click        │ focus that pane                │
+└──────────────┴────────────────────────────────┘
+
+ SIZE + LAYOUT
+┌──────────────┬────────────────────────────────┐
+│ C-b C-arrow  │ resize by 1                    │
+│ C-b M-arrow  │ resize by 5                    │
+│ then arrow   │ repeats without C-b (0.5s)     │
+│ drag border  │ resize with the mouse          │
+│ C-b Space    │ cycle layouts                  │
+│ C-b E        │ spread panes evenly            │
+│ C-b M-6  M-7 │ mirrored main layouts          │
+│ C-b M-1..5   │ dead: ⌥1-5 is AeroSpace's      │
+│ C-b C-o  M-o │ rotate panes, either way       │
+└──────────────┴────────────────────────────────┘
+
+ SCROLL + COPY  emacs keys
+┌──────────────┬────────────────────────────────┐
+│ C-b [        │ scroll mode (or the wheel)    ●│
+│ C-b PgUp     │ scroll mode, one page up       │
+│ PgUp  PgDn   │ page up / down                 │
+│ M-<  M->     │ top / bottom of history        │
+│ C-r  C-s     │ search up / down               │
+│ n  N         │ next / previous match          │
+│ g            │ go to line                     │
+│ C-Space      │ start selecting                │
+│ M-w          │ copy, also to macOS            │
+│ R            │ rectangle selection            │
+│ drag         │ select + copy                  │
+│ 2x  3x click │ copy word / line               │
+│ q  C-g       │ leave / drop selection         │
+│ C-b ]        │ paste tmux buffer              │
+│ C-b =        │ pick a buffer to paste         │
+└──────────────┴────────────────────────────────┘
+
+ TMUX EXTRAS
+┌──────────────┬────────────────────────────────┐
+│ C-b h        │ this sheet                    ●│
+│ C-b a        │ Claude popup in this dir      ●│
+│ C-b g        │ lazygit popup in this dir     ●│
+│ C-b r        │ reload tmux config             │
+│ C-b :        │ command prompt                 │
+│ C-b b        │ status bar on / off            │
+│ C-b C-b      │ send Ctrl+B to the app         │
+│ ! in status  │ agent in that window waits     │
+│ C-b t        │ big clock (any key quits)      │
+│ C-b i        │ pane and window info           │
+│ C-b ~        │ recent tmux messages           │
+│ C-b C-s      │ save every session now         │
+│ C-b C-r      │ restore saved sessions         │
+│ automatic    │ saved every 15 min, back       │
+│              │ when tmux starts               │
+│ C-b I  U     │ install / update plugins       │
+└──────────────┴────────────────────────────────┘
+
+ SHELL  zsh
+┌──────────────┬────────────────────────────────┐
+│ C-r          │ fuzzy history search          ●│
+│ C-t          │ fuzzy-insert a file path       │
+│ ⌥ c          │ fuzzy cd into a subdir         │
+│ →  C-e       │ accept the grey suggestion     │
+│ z NAME       │ jump to a frequent dir        ●│
+│ zi           │ pick a dir with fzf            │
+│ C-a  C-e     │ start / end of line            │
+│ C-w  C-u     │ delete word / whole line       │
+│ y            │ yazi                           │
+│ lg           │ lazygit                        │
+│ ll  la  lt   │ list, + hidden, tree           │
+│ study  build │ panels, same as ⌥s ⌥b          │
+│ c  ..        │ clear / up one dir             │
+└──────────────┴────────────────────────────────┘
+
+ NVIM  Space = leader
+┌──────────────┬────────────────────────────────┐
+│ Space Space  │ smart find: files, recent     ●│
+│ Space ff     │ find a file                    │
+│ Space fg     │ grep text in the project      ●│
+│ Space fb     │ open buffers                   │
+│ Space e      │ file explorer                  │
+│ Space d      │ diagnostics on this line       │
+│ Space m      │ math / image in a float        │
+│ Esc          │ clear search highlight         │
+└──────────────┴────────────────────────────────┘
+
+ NVIM PICKERS + EXPLORER
+┌──────────────┬────────────────────────────────┐
+│ picker       │ type to filter, then:          │
+│   C-j  C-k   │ down / up                      │
+│   ⏎          │ open                           │
+│   Tab        │ select several                 │
+│   C-v  C-s   │ open in vsplit / split         │
+│   Esc Esc    │ close                          │
+│ explorer     │ l or ⏎ open, h close dir       │
+│   a          │ add (end with / for a dir)     │
+│   r  d       │ rename / delete                │
+│   c  m       │ copy / move                    │
+│   y  p       │ yank / paste                   │
+│   H  I       │ show hidden / ignored          │
+└──────────────┴────────────────────────────────┘
+
+ NVIM CODE  LSP (clangd) + completion
+┌──────────────┬────────────────────────────────┐
+│ K            │ hover docs                     │
+│ C-]          │ go to definition               │
+│ grr          │ references                     │
+│ gri          │ implementation                 │
+│ grn          │ rename symbol                  │
+│ gra          │ code action                    │
+│ gO           │ symbols in this file           │
+│ [d  ]d       │ previous / next diagnostic     │
+│ C-Space      │ open completion / docs         │
+│ C-n  C-p     │ next / previous item           │
+│ C-y          │ accept the item               ●│
+│ C-e          │ close the menu                 │
+│ Tab  ⇧Tab    │ next / previous field          │
+│ C-k          │ signature help                 │
+│ C-f  C-b C-b │ scroll docs (C-b twice)        │
+└──────────────┴────────────────────────────────┘
+
+ NOTES  study vault
+┌──────────────┬────────────────────────────────┐
+│ Space on     │ new note                      ●│
+│ Space oo     │ switch to a note              ●│
+│ Space os     │ search the vault               │
+│ Space ob     │ backlinks                      │
+│ Space ot     │ insert a template              │
+│ ⏎            │ follow link, fold, tick box    │
+│ ]o  [o       │ next / previous link           │
+│ [[           │ link a note (completes)        │
+│ sr-due:      │ date it comes back for review  │
+└──────────────┴────────────────────────────────┘
+
+ MATH  inside $ $
+┌──────────────┬────────────────────────────────┐
+│ mk  dm       │ inline $ $ / display $$       ●│
+│ ff  //       │ \frac{}{}                      │
+│ a/           │ \frac{a}{}                     │
+│ Tab          │ jump to the next field         │
+│ ;a ;b ;q ;l  │ \alpha \beta \theta \lambda    │
+│ td  sr  cb   │ ^{}   ^2   ^3                  │
+│ x1  x_12     │ x_{1}   x_{12}                 │
+│ __  invs     │ _{}   ^{-1}                    │
+│ sq           │ \sqrt{}                        │
+│ RR NN ZZ QQ  │ \mathbb{R} N Z Q               │
+│ <=  >=  !=   │ \le  \ge  \neq                 │
+│ ->  =>  iff  │ \to  \implies  \iff            │
+│ **  xx       │ \cdot  \times                  │
+│ inn  notin   │ \in  \not\in                   │
+│ sum lim prod │ from the menu: C-y             │
+│ every one    │ math/00-latex-snippets.md      │
+└──────────────┴────────────────────────────────┘
+
+ YAZI  vault panel, y
+┌──────────────┬────────────────────────────────┐
+│ h j k l      │ parent, down, up, open         │
+│ ⏎  o         │ open file                      │
+│ Space        │ select (act on all)            │
+│ y  x  p      │ copy / cut / paste             │
+│ d  D         │ trash / delete for good        │
+│ a            │ new file (end / for a dir)     │
+│ r            │ rename                         │
+│ /  n         │ find in list, next             │
+│ f            │ filter the list                │
+│ s  S         │ search names / contents        │
+│ z  Z         │ jump: fzf / zoxide             │
+│ gh  gc  gd   │ home / .config / Downloads     │
+│ .            │ show hidden files              │
+│ Tab          │ file details                   │
+│ t t  1-9     │ new tab / go to tab            │
+│ F1  ~        │ help                           │
+│ q            │ quit                           │
+└──────────────┴────────────────────────────────┘
+
+ LAZYGIT  C-b g
+┌──────────────┬────────────────────────────────┐
+│ 1-5  h l     │ jump / step between panels     │
+│ j k  ⏎  Esc  │ move / open / back             │
+│ Space        │ stage / unstage file           │
+│ a            │ stage everything               │
+│ c            │ commit                         │
+│ A            │ amend last commit              │
+│ P  p         │ push / pull                    │
+│ f            │ fetch                          │
+│ d            │ discard changes (menu)         │
+│ s            │ stash everything               │
+│ z  Z         │ undo / redo                    │
+│ [  ]         │ previous / next tab            │
+│ /            │ search                         │
+│ +            │ bigger panel                   │
+│ ?            │ every key here                 │
+│ q            │ quit                           │
+└──────────────┴────────────────────────────────┘
+
+ CLAUDE CODE  ask panel, C-b a
+┌──────────────┬────────────────────────────────┐
+│ Esc          │ stop Claude mid-answer        ●│
+│ Esc Esc      │ rewind to an earlier turn      │
+│ ⇧Tab         │ cycle modes (plan, edits)      │
+│ ! cmd        │ run a shell command            │
+│ @ path       │ mention a file                 │
+│ /            │ slash commands                 │
+│ \ ⏎          │ new line in the prompt         │
+│ ↑            │ previous prompt                │
+│ C-o          │ full transcript                │
+│ C-c          │ clear input; twice quits       │
+│ C-b C-b      │ background a running task      │
+└──────────────┴────────────────────────────────┘

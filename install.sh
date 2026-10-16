@@ -29,6 +29,7 @@ tmux/minimal.conf|$HOME/.config/tmux/minimal.conf
 tmux/pills.conf|$HOME/.config/tmux/pills.conf
 tmux/panes.conf|$HOME/.config/tmux/panes.conf
 tmux/cheatsheet.txt|$HOME/.config/tmux/cheatsheet.txt
+tmux/cheatsheet.awk|$HOME/.config/tmux/cheatsheet.awk
 aerospace/aerospace.toml|$HOME/.config/aerospace/aerospace.toml
 sketchybar|$HOME/.config/sketchybar
 borders/bordersrc|$HOME/.config/borders/bordersrc
