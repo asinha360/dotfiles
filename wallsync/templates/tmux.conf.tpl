@@ -7,13 +7,14 @@ set -g @mono_fg '{{fg_hex}}'
 set -g @mono_dim '{{dim_hex}}'
 
 set -g status-style 'bg=default,fg={{dim_hex}}'
-set -g status-left-style 'fg={{hi_hex}},bold'
+set -g status-left-style 'fg={{sub_hex}},bold'
 set -g status-right-style 'fg={{dim_hex}}'
 setw -g window-status-style 'fg={{dim_hex}}'
-setw -g window-status-current-style 'fg={{hi_hex}},bold'
+# The current window is the only filled tab; a bell only tints the name
+setw -g window-status-current-style 'bg={{sel_flat}},fg={{hi_hex}},bold'
 setw -g window-status-last-style 'fg={{sub_hex}}'
 setw -g window-status-activity-style 'fg={{fg_hex}},underscore'
-setw -g window-status-bell-style 'fg={{ansi1_hex}},bold'
+setw -g window-status-bell-style 'fg={{ansi1_hex}}'
 
 setw -g pane-border-style 'fg={{line_flat}}'
 setw -g pane-active-border-style 'fg={{lineHi_flat}}'

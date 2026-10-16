@@ -53,9 +53,9 @@ ANSI hue pull: Δ = the shortest signed angle from the slot hue to H, in (−180
 
 **Template variables** (for every key above):
 - `{{k}}` = `RRGGBB`
-- `{{k_hex}}` = `#RRGGBB`
+- `{{k_hex}}` = `#rrggbb` (lowercase: tmux formats expand `#D` and `#F`)
 - `{{k_argb}}` = `0xAARRGGBB`, where AA = `Int(alpha*255+0.5)`
-- `{{k_flat}}` = `#RRGGBB`, composited over the opaque panel colour: per channel `Int(a*c + (1-a)*p + 0.5)`
+- `{{k_flat}}` = `#rrggbb`, composited over the opaque panel colour: per channel `Int(a*c + (1-a)*p + 0.5)`
 - `{{k_flat_argb}}` = `0xFF` + the flat colour
 
 Scalars: `{{H}}`, `{{C}}`, `{{wallpaper}}` (absolute path).

@@ -58,11 +58,12 @@ public struct Palette: Equatable, Sendable {
         let panel = self.panel
         for e in entries {
             let flat = ColorMath.flatten(e.rgb, alpha: e.alpha, over: panel)
+            // `#` forms are lowercase: tmux formats read `#D` and `#F` as variables
             out += [
                 (e.name, e.rgb.hex),
-                (e.name + "_hex", "#" + e.rgb.hex),
+                (e.name + "_hex", "#" + e.rgb.hex.lowercased()),
                 (e.name + "_argb", String(format: "0x%02X", ColorMath.byte(e.alpha)) + e.rgb.hex),
-                (e.name + "_flat", "#" + flat.hex),
+                (e.name + "_flat", "#" + flat.hex.lowercased()),
                 (e.name + "_flat_argb", "0xFF" + flat.hex),
             ]
         }
